@@ -1,6 +1,7 @@
 package guipackage;
 
 import java.awt.GraphicsConfiguration;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +20,7 @@ public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	static GraphicsConfiguration gc;
+	GridBagConstraints c = new GridBagConstraints();
 	
 	public Window(){
 		this.setTitle("My graph");
@@ -29,6 +31,11 @@ public class Window extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		JButton button1 = new JButton("--- Do query ---");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 0;
+		
 		button1.addActionListener(new ActionListener(){
 
 			@Override
@@ -37,10 +44,12 @@ public class Window extends JFrame {
 			}	
 		});
 		
-		button1.setBounds(100, 100, 140, 40);
+		
+		button1.setBounds(1, 1, 14, 4);
+		
 		this.add(button1);
 		
-		JTextArea textArea = new JTextArea (5,20);
+		JTextArea textArea = new JTextArea (2,2);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
 		//this.add(textArea);
