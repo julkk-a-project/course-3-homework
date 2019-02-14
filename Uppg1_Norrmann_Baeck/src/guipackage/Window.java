@@ -164,7 +164,7 @@ public class Window extends JFrame {
 		JTextArea textArea = new JTextArea (25,33);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
-		textArea.append("HEJ\nDIDOIJ\n\n\n\nasdasda\n\n\n\n\n\nasdasd\n\n cjodicjdsoc\ndcndn\nf\nfeijwf\nfeif\njoewjf\nidhw\njdoi\ndjwd\ndjow\nHej");
+		textArea.append("\nHey gorgeous\n\n\nYou look nice today\n\n\nHope you will have a wonderful day\n\n\nWe sure as hell will at prog III\n\n\nLOL\n\n\n...\n\n\n...\n\n\nThat's enough for one day\n\nI'm outta here\n\n\nGoodbye");
 		
 		//downLeft.add(textArea);
 		
