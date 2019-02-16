@@ -1,6 +1,5 @@
 
 
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -15,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 
 
@@ -30,7 +28,6 @@ public class Window extends JFrame {
 	private final JSplitPane leftSplitPane;
     private final JPanel upperRight;      	// container panel for upper right side
     private final JPanel upperLeft;    		// container panel for upper left side
-    private final JPanel downRight; 		// container panel for upper right side
     private final JPanel downLeft;			// container panel for down left side
     //private final JScrollPane scrollPane; // makes the text scrollable
     //private final JTextArea textArea;     // the text
@@ -39,6 +36,12 @@ public class Window extends JFrame {
     //private final JButton button;         // and a "send" button
 	
 	public Window(){
+
+		this.setTitle("My graph");
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setSize(1200, 800);
+		this.setResizable(true);
+		this.setLocationRelativeTo(null);
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
@@ -50,10 +53,6 @@ public class Window extends JFrame {
 		
 		upperRight = new JPanel(new GridBagLayout());
 		//splitPane.add(upperRight);
-
-		
-		downRight = new JPanel(new GridBagLayout());
-		//splitPane.add(downRight);
 		
 		
 		downLeft = new JPanel();
@@ -75,12 +74,6 @@ public class Window extends JFrame {
         splitPane.setTopComponent(leftSplitPane);                  	// at the top we want our "topPanel"
         splitPane.setBottomComponent(upperRight);
 		
-		this.setTitle("My graph");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(1200, 800);
-		this.setResizable(true);
-		
-		this.setLocationRelativeTo(null);
 		
 		JButton button1 = new JButton("--- Do query ---");		//new button
 		
@@ -97,37 +90,27 @@ public class Window extends JFrame {
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.5;
 		//c.fill = GridBagConstraints.NORTH;
-		
 
 		c.gridx = 0;
 		c.gridy = 0;
 		upperLeft.add(new Label("Data Series"), c);
-		
 
 		c.gridx = 0;
 		c.gridy = 1;
 		upperLeft.add(new Label("Time Series"), c);
-		
 
 		c.gridx = 0;
 		c.gridy = 2;
 		upperLeft.add(new Label("Symbol"), c);
 
-
 		c.gridx = 0;
 		c.gridy = 3;
 		upperLeft.add(new Label("Time Interval"), c);
-		
 
 		c.gridx = 0;
 		c.gridy = 4;
 		upperLeft.add(new Label("Output Size"), c);
 
-
-		
-		
-
-		
 		c.gridx = 1;
 		c.gridy = 0;
 		upperLeft.add(dropDown1, c);
@@ -153,13 +136,19 @@ public class Window extends JFrame {
 		upperLeft.add(button1, c);
 		
 	
-		JTextArea textArea = new JTextArea (25,33);
+		JTextArea textArea = new JTextArea (27,35);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
 		//textArea.append("\nHey gorgeous\n\n\nYou look nice today\n\n\nHope you will have a wonderful day\n\n\nWe sure as hell will at prog III\n\n\nLOL\n\n\n...\n\n\n...\n\n\nThat's enough for one day\n\nI'm outta here\n\n\nGoodbye");
 		
 		//downLeft.add(textArea);
 		
+		
+
+		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
 		downLeft.add(scroll,c);
 		
 		
