@@ -12,7 +12,7 @@ public class WebDownloader {
 		testIt();
 	   }
 
-	private static void testIt(){
+	static String testIt(){
 
       String https_url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=15min&outputsize=full&apikey=X0E92VRLD6Z3KLH0";
       URL url;
@@ -26,12 +26,14 @@ public class WebDownloader {
 
 	     //dump all the content <-- no print needed, but need json parse
 		 //print_content(con);
-		 
+
+	      return print_content(con);
       } catch (MalformedURLException e) {
     	  e.printStackTrace();
     	  } catch (IOException e) {
     		  e.printStackTrace();
     		  }
+	return "Fail";
       }
 	/*private static void print_https_cert(HttpsURLConnection con){
 		if(con!=null){
@@ -57,7 +59,8 @@ public class WebDownloader {
 						}
 			}
 		}*/
-	/*private static void print_content(HttpsURLConnection con){
+	private static String print_content(HttpsURLConnection con){
+		String string = "";
 		if(con!=null){
 			try {
 				System.out.println("** Content of the URL ****");
@@ -66,12 +69,13 @@ public class WebDownloader {
 								new InputStreamReader(con.getInputStream()));
 				String input;
 				while ((input = br.readLine()) != null){
-					System.out.println(input);
+					string += input;
 					}
 				br.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 					}
 			}
-		}*/
+		return string;
+		}
 }
