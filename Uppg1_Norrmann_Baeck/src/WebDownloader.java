@@ -6,9 +6,6 @@ import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 
 public class WebDownloader {
-	public static void main(String[] args) {
-		testIt();
-	   }
 
 	static String testIt(){
 
@@ -19,7 +16,7 @@ public class WebDownloader {
 	     url = new URL(https_url);
 	     HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
 
-	     //dumpl all cert info <----not needed at all accordign to teacher.. altså för vår projekt
+	     //dumpl all cert info <----not needed at all according to teacher.. altså för vår projekt
 	     //print_https_cert(con);
 
 	     //dump all the content <-- no print needed, but need json parse

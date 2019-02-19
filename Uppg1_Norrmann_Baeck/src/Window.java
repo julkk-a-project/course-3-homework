@@ -1,5 +1,6 @@
 
 
+import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 
@@ -28,6 +30,7 @@ public class Window extends JFrame {
 	private final JSplitPane leftSplitPane;
     private final JPanel upperRight;      	// container panel for upper right side
     private final JPanel upperLeft;    		// container panel for upper left side
+    private final JPanel downRight; 		// container panel for upper right side
     private final JPanel downLeft;			// container panel for down left side
     //private final JScrollPane scrollPane; // makes the text scrollable
     //private final JTextArea textArea;     // the text
@@ -36,12 +39,6 @@ public class Window extends JFrame {
     //private final JButton button;         // and a "send" button
 	
 	public Window(){
-
-		this.setTitle("My graph");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(1200, 800);
-		this.setResizable(true);
-		this.setLocationRelativeTo(null);
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
@@ -53,6 +50,10 @@ public class Window extends JFrame {
 		
 		upperRight = new JPanel(new GridBagLayout());
 		//splitPane.add(upperRight);
+
+		
+		downRight = new JPanel(new GridBagLayout());
+		//splitPane.add(downRight);
 		
 		
 		downLeft = new JPanel();
@@ -74,14 +75,31 @@ public class Window extends JFrame {
         splitPane.setTopComponent(leftSplitPane);                  	// at the top we want our "topPanel"
         splitPane.setBottomComponent(upperRight);
 		
+		this.setTitle("My graph");
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setSize(1200, 800);
+		this.setResizable(true);
+		
+		this.setLocationRelativeTo(null);
 		
 		JButton button1 = new JButton("--- Do query ---");		//new button
 		
-		JComboBox<Object> dropDown1 = new JComboBox<Object>();	//5 dropdownboxes
-		JComboBox<Object> dropDown2 = new JComboBox<Object>();
-		JComboBox<Object> dropDown3 = new JComboBox<Object>();
-		JComboBox<Object> dropDown4 = new JComboBox<Object>();
-		JComboBox<Object> dropDown5 = new JComboBox<Object>();
+		
+		String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
+		JComboBox<String> dataSeries = new JComboBox<String>(dataSeriesString);	//5 dropdownboxes
+
+		String[] timeSeriesString = {"TIME_SERIES_INTERDAY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
+				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
+		JComboBox<String> timeSeries = new JComboBox<String>(timeSeriesString);
+
+		String[] symbolString = {"AAPL", "GOOG", "INTC", "KO", "MSFT", "WMT"};
+		JComboBox<String> symbol = new JComboBox<String>(symbolString);
+
+		String[] timeIntervalString = {"1min", "5min", "15min", "30min", "60min"};
+		JComboBox<String> timeInterval = new JComboBox<String>(timeIntervalString);
+
+		String[] outputSizeString = {"compact", "full"};
+		JComboBox<String> outputSize = new JComboBox<String>(outputSizeString);
 		
 		
 
@@ -90,76 +108,81 @@ public class Window extends JFrame {
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.5;
 		//c.fill = GridBagConstraints.NORTH;
+		
 
 		c.gridx = 0;
 		c.gridy = 0;
 		upperLeft.add(new Label("Data Series"), c);
+		
 
 		c.gridx = 0;
 		c.gridy = 1;
 		upperLeft.add(new Label("Time Series"), c);
+		
 
 		c.gridx = 0;
 		c.gridy = 2;
 		upperLeft.add(new Label("Symbol"), c);
 
+
 		c.gridx = 0;
 		c.gridy = 3;
 		upperLeft.add(new Label("Time Interval"), c);
+		
 
 		c.gridx = 0;
 		c.gridy = 4;
 		upperLeft.add(new Label("Output Size"), c);
 
+
+		
+		
+
+		
 		c.gridx = 1;
 		c.gridy = 0;
-		upperLeft.add(dropDown1, c);
+		upperLeft.add(dataSeries, c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		upperLeft.add(dropDown2, c);
+		upperLeft.add(timeSeries, c);
 		
 		c.gridx = 1;
 		c.gridy = 2;
-		upperLeft.add(dropDown3, c);
+		upperLeft.add(symbol, c);
 		
 		c.gridx = 1;
 		c.gridy = 3;
-		upperLeft.add(dropDown4, c);
+		upperLeft.add(timeInterval, c);
 		
 		c.gridx = 1;
 		c.gridy = 4;
-		upperLeft.add(dropDown5, c);
+		upperLeft.add(outputSize, c);
 
 		c.gridx = 1;
 		c.gridy = 5;
 		upperLeft.add(button1, c);
 		
 	
-		JTextArea textArea = new JTextArea (27,35);
+		JTextArea textArea = new JTextArea (25,33);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
 		//textArea.append("\nHey gorgeous\n\n\nYou look nice today\n\n\nHope you will have a wonderful day\n\n\nWe sure as hell will at prog III\n\n\nLOL\n\n\n...\n\n\n...\n\n\nThat's enough for one day\n\nI'm outta here\n\n\nGoodbye");
 		
 		//downLeft.add(textArea);
 		
-		
-
-		c.anchor = GridBagConstraints.CENTER;
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 0;
 		downLeft.add(scroll,c);
 		
 		
 		
 		
 		button1.addActionListener(new ActionListener(){			//settings for what happens when we push "Do query"-button (button1)
+			
 			int size = 0;
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.append(("\n"+JsonReader.readWeb()));
+				textArea.append(("\n"+JsonReader.readWeb(dataSeries.getSelectedItem(), timeSeries.getSelectedItem(), symbol.getSelectedItem(), timeInterval.getSelectedItem(), outputSize.getSelectedItem())));
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
 			}	

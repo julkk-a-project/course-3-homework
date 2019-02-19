@@ -1,7 +1,7 @@
-
+import org.json.JSONObject;
 
 public class JsonReader {
-	public static String readWeb() {
+	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
 		
 		
 		//takes in information from website
@@ -10,6 +10,9 @@ public class JsonReader {
 		
 		//Parse text here:
 		String log = json; //temporary
+		
+		JSONObject obj = new JSONObject(WebDownloader.testIt());
+		
 		
 		
 		
