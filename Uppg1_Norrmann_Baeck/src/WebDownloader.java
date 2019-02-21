@@ -7,9 +7,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WebDownloader {
 
-	static String testIt(){
+	static String testIt(String text){
 
-      String https_url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=15min&outputsize=full&apikey=X0E92VRLD6Z3KLH0";
+      String https_url = text;
+		
       URL url;
       try {
 

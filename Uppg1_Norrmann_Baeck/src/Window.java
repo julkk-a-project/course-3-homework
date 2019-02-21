@@ -88,7 +88,7 @@ public class Window extends JFrame {
 		String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
 		JComboBox<String> dataSeries = new JComboBox<String>(dataSeriesString);	//5 dropdownboxes
 
-		String[] timeSeriesString = {"TIME_SERIES_INTERDAY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
+		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
 				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
 		JComboBox<String> timeSeries = new JComboBox<String>(timeSeriesString);
 
@@ -182,7 +182,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.append(("\n"+JsonReader.readWeb(dataSeries.getSelectedItem(), timeSeries.getSelectedItem(), symbol.getSelectedItem(), timeInterval.getSelectedItem(), outputSize.getSelectedItem())));
+				textArea.append(("\n"+JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem())));
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
 			}	
