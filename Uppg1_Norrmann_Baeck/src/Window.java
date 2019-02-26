@@ -182,7 +182,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.append(("\n"+JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem())));
+				textArea.append((JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
 			}	

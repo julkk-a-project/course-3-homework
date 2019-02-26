@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -12,25 +13,36 @@ public class JsonReader {
 		
 		
 		//Parse text here:
-		String log = json; //temporary
+
+		
 		
 		JSONObject obj = new JSONObject(json);
-		Set <String> keys = obj.getJSONObject("Time Series (" + timeInterval + ")").keySet();
+		obj.remove("metadata");
+		
+		
+		//Set<String> keys1 = obj.getJSONObject(); 
+		
+		Set <String> keys = obj.keySet();
 		
 		Iterator<String> it = keys.iterator();
-		while(it.hasNext()) {
-			System.out.println(obj.getJSONObject(it.next()).getString(dataSeries));
-			//String pageName = obj.getJSONObject(it.next()).getString(dataSeries);	
+		JSONObject obj2 = obj.getJSONObject(it.next());
+		
+		Set <String> keys2 = obj2.keySet();
+		Iterator<String> it2 = keys2.iterator();
+		System.out.println(keys2);
+		ArrayList<String> arrayOfKeys2 = new ArrayList<>();
+		//i want to split keys2 at "," and then add to arrayList called arrayOfKeys2
+		
+		String log = "===== Showing data for " + dataSeries + " =====\n";
+		int i = -1;
+		while(it2.hasNext()) {
+			i++;
+			JSONObject data = obj2.getJSONObject(it2.next());
+			log += "Date: " + arrayOfKeys2.get(i) + ": "+data.getString(dataSeries) + "\n";
+			//insert graph functionality here
+			//blabla = data.getString(dataSeries);
 		}
-		
-		//for(String s: keys)
-			//System.out.println(s);
-		//obj.get(keys);
-		//for (String s: keys)
-		//	String pageName = obj.getJSONObject("Time Series ("+timeSeries+")").getString(keys);
-		
-		
-		
+			
 		
 		//Should return information about what was downloaded, not all content.
 		return log;
