@@ -13,7 +13,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Graph extends JPanel {
-   private static final int MAX_SCORE = 20;
+   private static final int MAX_SCORE = 2000;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
    private static final int BORDER_GAP = 30;
@@ -22,11 +22,13 @@ public class Graph extends JPanel {
    private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
    private static final int GRAPH_POINT_WIDTH = 12;
    private static final int Y_HATCH_CNT = 10;
-   private List<Integer> scores;
+   public List<Double> scores;
 
-   public Graph(List<Integer> scores) {
-      this.scores = scores;
+   public Graph() {
    }
+   public Graph(List<Double> scores) {
+	      this.scores = scores;
+	   }
 
    @Override
    protected void paintComponent(Graphics g) {
@@ -93,11 +95,12 @@ public class Graph extends JPanel {
       return new Dimension(PREF_W, PREF_H);
    }
 
+   /*
    private static void createAndShowGui() {
       List<Integer> scores = new ArrayList<Integer>();
       Random random = new Random();
-      int maxDataPoints = 16;
-      int maxScore = 20;
+      int maxDataPoints = 100;
+      int maxScore = 2000;
       for (int i = 0; i < maxDataPoints ; i++) {
          scores.add(random.nextInt(maxScore));
       }
@@ -109,13 +112,25 @@ public class Graph extends JPanel {
       frame.pack();
       frame.setLocationByPlatform(true);
       frame.setVisible(true);
+   }*/
+   
+   
+   //OUR EDITS:
+   
+   public void setScore(List<Double> scores) {
+	   this.scores = scores;
+	   }
+   public void resetScore() {
+	   scores.clear();
    }
+   
+   
 
-   public static void main(String[] args) {
+/*   public static void main(String[] args) {
       SwingUtilities.invokeLater(new Runnable() {
          public void run() {
             createAndShowGui();
          }
       });
-   }
+   }*/
 }

@@ -30,8 +30,9 @@ public class Window extends JFrame {
 	private final JSplitPane leftSplitPane;
     private final JPanel upperRight;      	// container panel for upper right side
     private final JPanel upperLeft;    		// container panel for upper left side
-    private final JPanel downRight; 		// container panel for upper right side
+    //private final JPanel downRight; 		// container panel for upper right side
     private final JPanel downLeft;			// container panel for down left side
+    public static Graph graph;						// our graph
     //private final JScrollPane scrollPane; // makes the text scrollable
     //private final JTextArea textArea;     // the text
     //private final JPanel inputPanel;      // under the text a container for all the input elements
@@ -48,11 +49,11 @@ public class Window extends JFrame {
 		//splitPane.add(upperLeft);
 		
 		
-		upperRight = new JPanel(new GridBagLayout());
+		upperRight = new JPanel();
 		//splitPane.add(upperRight);
 
 		
-		downRight = new JPanel(new GridBagLayout());
+		//downRight = new JPanel(new GridBagLayout());
 		//splitPane.add(downRight);
 		
 		
@@ -175,14 +176,21 @@ public class Window extends JFrame {
 		
 		
 		
-		
 		button1.addActionListener(new ActionListener(){			//settings for what happens when we push "Do query"-button (button1)
 			
 			int size = 0;
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				graph = new Graph();
+				try {
+					graph.resetScore();
+				}catch(Exception e){
+					System.out.println("No clear needed at first run");
+				}
 				textArea.append((JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
+				upperRight.add(graph);
+				upperRight.setVisible(true);
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
 			}	
