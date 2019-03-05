@@ -1,8 +1,9 @@
 
 
 public class Main {
+	public static Window window;
 	public static void main(String[] args) {
-		new Window();
+		window = new Window();
 	}
 
 }

@@ -188,10 +188,11 @@ public class Window extends JFrame {
 					System.out.println("No clear needed at first run");
 				}
 				textArea.append((JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
-				//upperRight.setVisible(true);
+				upperRight.setVisible(true);
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
-			}	
+				Main.window.packMe();
+			}
 		});
 		
 
@@ -199,12 +200,25 @@ public class Window extends JFrame {
 		GridBagConstraints d = new GridBagConstraints();
 		d.anchor = GridBagConstraints.FIRST_LINE_START;
 		d.weightx = 0.5;
-		//c.fill = GridBagConstraints.NORTH;
+		d.fill = GridBagConstraints.NORTH;
+		
+
+		//d.gridx = 0;
+		//d.gridy = 0;
+		//upperRight.add(new Label("meme"), d);
+		
+
+		d.gridx = 0;
+		d.gridy = 1;
 		upperRight.add(graph, d);
 		
 		this.setVisible(true);
-		
-	//	this.pack();
+		this.revalidate();
+		this.pack();
+	}
+	public void packMe() {
+		this.repaint();
+		this.revalidate();
 	}
 }
 

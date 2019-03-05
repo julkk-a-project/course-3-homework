@@ -1,6 +1,7 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -13,10 +14,11 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Graph extends JPanel {
-   private static double MAX_SCORE = 2000;
+   private double MAX_SCORE = 2000;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
-   private static final int BORDER_GAP = 30;
+   private static final int BORDER_GAP = 50;
+   private static final int LABEL_GAP = 0;
    private static final Color GRAPH_COLOR = Color.cyan;
    private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
@@ -56,14 +58,33 @@ public class Graph extends JPanel {
       g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
       g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
-      // create hatch marks for y axis. 
-      for (int i = 0; i < Y_HATCH_CNT; i++) {
+      // create hatch marks for y axis.
+      for (int i = 0; i < Y_HATCH_CNT + 1; i++) {
+          int x0 = BORDER_GAP + LABEL_GAP;
+          int x1 = GRAPH_POINT_WIDTH + BORDER_GAP + LABEL_GAP;
+          int y0 = getHeight()
+                  - ((i * (getHeight() - BORDER_GAP * 2 - LABEL_GAP)) / Y_HATCH_CNT + BORDER_GAP + LABEL_GAP);
+          int y1 = y0;
+          if (scores.size() > 0) {
+              //g2.setColor(gridColor);
+              g2.drawLine(BORDER_GAP + LABEL_GAP + 1 + GRAPH_POINT_WIDTH, y0, getWidth() - BORDER_GAP, y1);
+              g2.setColor(Color.BLACK);
+              String yLabel = ((int) ((getMinScore()
+                      + (getMaxScore() - getMinScore()) * ((i * 1.0) / Y_HATCH_CNT)) * 100)) / 100.0 + "";
+              FontMetrics metrics = g2.getFontMetrics();
+              int labelWidth = metrics.stringWidth(yLabel);
+              g2.drawString(yLabel, x0 - labelWidth - 5, y0 + (metrics.getHeight() / 2) - 3);
+          }
+          g2.drawLine(x0, y0, x1, y1);
+      }
+      /*for (int i = 0; i < Y_HATCH_CNT; i++) {
          int x0 = BORDER_GAP;
          int x1 = GRAPH_POINT_WIDTH + BORDER_GAP;
          int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
          int y1 = y0;
          g2.drawLine(x0, y0, x1, y1);
-      }
+      }*/
+      
 
       // and for x axis
       for (int i = 0; i < scores.size() - 1; i++) {
@@ -134,6 +155,12 @@ public class Graph extends JPanel {
 	   this.MAX_SCORE = max;
 	   Y_HATCH_CNT = (int) (max/100);
    }
+   public double getMaxScore(){
+	   return MAX_SCORE;
+   }
+    public double getMinScore() {
+    	return 0;
+    }
    
    
 

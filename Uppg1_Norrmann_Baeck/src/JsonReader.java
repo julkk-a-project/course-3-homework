@@ -100,9 +100,10 @@ public class JsonReader {
 		}
 		
 		
-		Window.graph.setMaxScore(max);
+		Main.window.graph.setMaxScore(max);
 			
-		Window.graph.setScore(datapoints);
+		Main.window.graph.setScore(datapoints);
+		//Window.upperRight.revalidate();
 		//Should return information about what was downloaded, not all content.
 		return log;
 		
