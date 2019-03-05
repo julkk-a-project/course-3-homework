@@ -1,4 +1,6 @@
+package main;
 
+import gui.Window;
 
 public class Main {
 	public static Window window;

@@ -1,6 +1,6 @@
+package gui;
 
 
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -34,7 +34,7 @@ public class Window extends JFrame {
     private final JPanel downLeft;			// container panel for down left side
     public static Graph graph;						// our graph
     //private final JScrollPane scrollPane; // makes the text scrollable
-    //private final JTextArea textArea;     // the text
+    public JTextArea textArea;     // the text
     //private final JPanel inputPanel;      // under the text a container for all the input elements
     //private final JTextField textField;   // a textField for the text the user inputs
     //private final JButton button;         // and a "send" button
@@ -165,7 +165,7 @@ public class Window extends JFrame {
 		upperLeft.add(button1, c);
 		
 	
-		JTextArea textArea = new JTextArea (25,33);
+		textArea = new JTextArea (25,33);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
 		//textArea.append("\nHey gorgeous\n\n\nYou look nice today\n\n\nHope you will have a wonderful day\n\n\nWe sure as hell will at prog III\n\n\nLOL\n\n\n...\n\n\n...\n\n\nThat's enough for one day\n\nI'm outta here\n\n\nGoodbye");
@@ -176,6 +176,17 @@ public class Window extends JFrame {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		button1.addActionListener(new ActionListener(){			//settings for what happens when we push "Do query"-button (button1)
 			
 			int size = 0;
@@ -183,17 +194,47 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					//graph.resetScore();
+					graph.resetScore();
 				}catch(Exception e){
 					System.out.println("No clear needed at first run");
 				}
-				textArea.append((JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
+				textArea.append((data.JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
 				upperRight.setVisible(true);
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
-				Main.window.packMe();
+				main.Main.window.packMe();
 			}
 		});
+		
+
+		
+		
+		
+		dataSeries.addActionListener(new ActionListener(){			//bla
+			
+			//int size = 0;
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					graph.resetScore();
+				}catch(Exception e){
+					System.out.println("No clear needed at first run");
+				}
+				textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");
+				upperRight.setVisible(true);
+				
+				System.out.println("Bobs and vagin");
+				main.Main.window.packMe();
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
 		
 
 		graph = new Graph();
@@ -214,7 +255,7 @@ public class Window extends JFrame {
 		
 		this.setVisible(true);
 		this.revalidate();
-		this.pack();
+		this.packMe();
 	}
 	public void packMe() {
 		this.repaint();

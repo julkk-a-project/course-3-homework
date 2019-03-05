@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +10,6 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -17,16 +17,19 @@ public class Graph extends JPanel {
    private double MAX_SCORE = 2000;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
-   private static final int BORDER_GAP = 50;
+   private static final int BORDER_GAP = 40;
    private static final int LABEL_GAP = 0;
    private static final Color GRAPH_COLOR = Color.cyan;
    private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
    private static final int GRAPH_POINT_WIDTH = 5;
-   private static int Y_HATCH_CNT = 10;
+   private static int Y_HATCH_CNT = 1000;
    public List<Double> scores;
+   private double MIN_SCORE = 0; //not used yet (maybe never?)
 
    public Graph() {
+	   
+	   //Generates default set
 	   double temp = 27;
 	   List<Double> tempList = new ArrayList<Double>();
 	   for(int i = 0; i < 27; i++) {
@@ -154,6 +157,10 @@ public class Graph extends JPanel {
    public void setMaxScore(double max) {
 	   this.MAX_SCORE = max;
 	   Y_HATCH_CNT = (int) (max/100);
+   }
+   public void setMinScore(double min) {
+	   this.MIN_SCORE = min;
+	   //Y_HATCH_CNT = (int) (max/100);
    }
    public double getMaxScore(){
 	   return MAX_SCORE;

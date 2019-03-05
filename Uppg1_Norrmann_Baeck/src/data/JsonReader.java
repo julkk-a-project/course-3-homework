@@ -1,13 +1,20 @@
+package data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.json.JSONObject;
+import data.DataHandler;
 
 public class JsonReader {
+	
+	private String dataSeries;
+	private String timeSeries;
+	private String symbol;
+	private String timeInterval;
+	private String outputSize;
+	
 	private static List<Double> datapoints = new ArrayList<Double>();
 	
 
@@ -15,7 +22,7 @@ public class JsonReader {
 		
 		
 		//takes in information from website
-		String json = WebDownloader.testIt("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey=X0E92VRLD6Z3KLH0");
+		String json = data.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey=X0E92VRLD6Z3KLH0");
 		
 		
 		//Parse text here:
@@ -48,6 +55,7 @@ public class JsonReader {
 		}*/
 		
 		double max = 0;
+		double min = -1;
 		
 		String log = "===== Showing data for " + dataSeries + " =====\n";
 		int i = -1;
@@ -60,6 +68,9 @@ public class JsonReader {
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
 			if(datapoint > max) {
 				max = datapoint;
+			}
+			if(datapoint < min || min == -1) {
+				min = datapoint;
 			}
 			datapointSorter.add(datapoint);
 			dateSorter.add(arrayOfKeys2.get(i));
@@ -99,13 +110,20 @@ public class JsonReader {
 			//blabla = data.getString(dataSeries);	
 		}
 		
+		System.out.println(min);
+		main.Main.window.graph.setMaxScore(max);
+		main.Main.window.graph.setMinScore(min);
 		
-		Main.window.graph.setMaxScore(max);
-			
-		Main.window.graph.setScore(datapoints);
+		main.Main.window.graph.setScore(datapoints);
 		//Window.upperRight.revalidate();
 		//Should return information about what was downloaded, not all content.
 		return log;
 		
+	}
+
+
+	public static String readData(String selectedItem) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
