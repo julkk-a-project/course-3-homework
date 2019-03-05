@@ -39,7 +39,7 @@ public class JsonReader {
 		//i want to split keys2 at "," and then add to arrayList called arrayOfKeys2
 		ArrayList<String> arrayOfKeys2 = new ArrayList<>(keys2); 
 				//it2.toString().split(",");
-		Collections.sort(arrayOfKeys2);
+		//Collections.sort(arrayOfKeys2);
 		System.out.println(arrayOfKeys2.size());
 		/*for (int i = 0; i < arrayOfKeys2.size(); i++) {
 			//String[] string = ;
@@ -47,18 +47,60 @@ public class JsonReader {
 			System.out.println(arrayOfKeys2.get(i));
 		}*/
 		
+		double max = 0;
 		
 		String log = "===== Showing data for " + dataSeries + " =====\n";
 		int i = -1;
+
+		ArrayList<Double> datapointSorter = new ArrayList<Double>();
+		ArrayList<String> dateSorter = new ArrayList<String>();
 		while(it2.hasNext()) {
 			i++;
 			JSONObject data = obj2.getJSONObject(it2.next());
-			log += "Date: " + arrayOfKeys2.get(i) + ": "+data.getString(dataSeries) + "\n";
-			//insert graph functionality here
-			//blabla = data.getString(dataSeries);
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
-			datapoints.add(datapoint);
+			if(datapoint > max) {
+				max = datapoint;
+			}
+			datapointSorter.add(datapoint);
+			dateSorter.add(arrayOfKeys2.get(i));
+			//SORT EVERYTHING
+			int x, y; 
+			String key;
+			double key2;
+			   for (x = 1; x < dateSorter.size(); x++) 
+			   { 
+			       key = dateSorter.get(x);
+			       key2 = datapointSorter.get(x);
+			       
+			       y = x-1; 
+			  
+			       /* Move elements of arr[0..i-1], that are 
+			          greater than key, to one position ahead 
+			          of their current position */
+			       while (y >= 0 && dateSorter.get(y).compareTo(key) > 0) 
+			       { 
+			    	   dateSorter.set(y+1, dateSorter.get(y));
+			    	   datapointSorter.set(y+1, datapointSorter.get(y));
+			           y = y-1; 
+			       }
+			       dateSorter.set(y+1, key);
+			       datapointSorter.set(y+1, key2);
+			   } 
+
+			
+			
+			
+			
 		}
+		for (int j = 0; j < dateSorter.size(); j++) {
+			datapoints.add(datapointSorter.get(j));
+			log += "Date: " + dateSorter.get(j) + ": "+datapointSorter.get(j) + "\n";
+			//insert graph functionality here
+			//blabla = data.getString(dataSeries);	
+		}
+		
+		
+		Window.graph.setMaxScore(max);
 			
 		Window.graph.setScore(datapoints);
 		//Should return information about what was downloaded, not all content.

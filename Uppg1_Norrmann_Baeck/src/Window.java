@@ -49,7 +49,7 @@ public class Window extends JFrame {
 		//splitPane.add(upperLeft);
 		
 		
-		upperRight = new JPanel();
+		upperRight = new JPanel(new GridBagLayout());
 		//splitPane.add(upperRight);
 
 		
@@ -182,20 +182,25 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graph = new Graph();
 				try {
-					graph.resetScore();
+					//graph.resetScore();
 				}catch(Exception e){
 					System.out.println("No clear needed at first run");
 				}
 				textArea.append((JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
-				upperRight.add(graph);
-				upperRight.setVisible(true);
+				//upperRight.setVisible(true);
 				size++;
 				System.out.println("You have pushed the button " + size + " times");
 			}	
 		});
 		
+
+		graph = new Graph();
+		GridBagConstraints d = new GridBagConstraints();
+		d.anchor = GridBagConstraints.FIRST_LINE_START;
+		d.weightx = 0.5;
+		//c.fill = GridBagConstraints.NORTH;
+		upperRight.add(graph, d);
 		
 		this.setVisible(true);
 		
