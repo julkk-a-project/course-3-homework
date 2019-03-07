@@ -25,13 +25,15 @@ public class WebDownloader {
 		 //print_content(con);
 
 	      return print_content(con);
+	      
       } catch (MalformedURLException e) {
     	  e.printStackTrace();
     	  } catch (IOException e) {
     		  e.printStackTrace();
     		  }
 	return "Fail";
-      }
+    }
+	
 	/*private static void print_https_cert(HttpsURLConnection con){
 		if(con!=null){
 			try {
@@ -56,23 +58,34 @@ public class WebDownloader {
 						}
 			}
 		}*/
+	
 	private static String print_content(HttpsURLConnection con){
 		String string = "";
+		
 		if(con!=null){
 			try {
-				System.out.println("** Content of the URL ****");
+				main.Main.window.textArea.append("**** Content of the URL ****\n");
+				//System.out.println("**** Content of the URL ****");
 				BufferedReader br =
 						new BufferedReader(
 								new InputStreamReader(con.getInputStream()));
 				String input;
+				int i = 0;
+				
 				while ((input = br.readLine()) != null){
 					string += input;
+					i++;
+					if (i % 100 == 0) {
+						main.Main.window.textArea.append(i+" lines...\n");
+						main.Main.window.packMe();
+					}
 					}
 				br.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 					}
 			}
+		main.Main.window.resetDataSeries();
 		return string;
 		}
 }

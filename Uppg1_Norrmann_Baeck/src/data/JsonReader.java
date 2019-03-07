@@ -5,49 +5,68 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.json.JSONObject;
-import data.DataHandler;
 
 public class JsonReader {
 	
-	private String dataSeries;
-	private String timeSeries;
-	private String symbol;
-	private String timeInterval;
-	private String outputSize;
 	
 	private static List<Double> datapoints = new ArrayList<Double>();
-	
 
 	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
 		
 		
-		//takes in information from website
+		//takes in information from webSite
 		String json = data.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey=X0E92VRLD6Z3KLH0");
 		
+		try {
+			return parser(json, dataSeries);
+		} catch (Exception e) {
+			if(dataSeries == null) {
+				return "***Please select a dataSeries***";
+			} else {
+				return "***No \""+ dataSeries + "\" found***";
+				
+			}
+		}
+	}
+	
+	public static String readData(String dataSeries) {
+		try {
+			String json = data.DataHandler.getData("old");
+			return parser(json, dataSeries);
+		}catch(Exception e) {
+			if(dataSeries == null) {
+				return "***You can't select an empty dataSeries***";
+			}else {
+				return "***No \""+ dataSeries + "\" found***";				
+			}
+		}
+	}
+	
+	
+	public static String parser(String json, String dataSeries) {
 		
 		//Parse text here:
-
-		
 		
 		JSONObject obj = new JSONObject(json);
+		//System.out.println("obj: "+obj);
 		obj.remove("Meta Data");
-		
+		//System.out.println("obj aftdel: "+obj);
 		
 		//Set<String> keys1 = obj.getJSONObject(); 
 		
 		Set <String> keys = obj.keySet();
-		
 		Iterator<String> it = keys.iterator();
 		JSONObject obj2 = obj.getJSONObject(it.next());
+		//System.out.println("obj2 "+obj2);
 		
 		Set <String> keys2 = obj2.keySet();
 		Iterator<String> it2 = keys2.iterator();
-		System.out.println(keys2);
+		//System.out.println(keys2);
 		//i want to split keys2 at "," and then add to arrayList called arrayOfKeys2
 		ArrayList<String> arrayOfKeys2 = new ArrayList<>(keys2); 
 				//it2.toString().split(",");
 		//Collections.sort(arrayOfKeys2);
-		System.out.println(arrayOfKeys2.size());
+		//System.out.println(arrayOfKeys2.size());
 		/*for (int i = 0; i < arrayOfKeys2.size(); i++) {
 			//String[] string = ;
 			//arrayOfKeys2[i] = string;
@@ -62,9 +81,52 @@ public class JsonReader {
 
 		ArrayList<Double> datapointSorter = new ArrayList<Double>();
 		ArrayList<String> dateSorter = new ArrayList<String>();
+		
+
+		
+		
+		
 		while(it2.hasNext()) {
 			i++;
 			JSONObject data = obj2.getJSONObject(it2.next());
+			
+			
+			//getDataSeries's's
+			
+			if(i == 0 && main.Main.window.DataSeriesEmpty()) {
+				int modulaTest = 0;
+				//System.out.println("asdasd "+i+" it2: "+it2);
+				String[] protoDataSeries = data.toString().split("\"");
+				String[] DataSeriesArray;
+				for(int proto = 0; proto < protoDataSeries.length; proto++) {
+					//System.out.println(proto+". "+protoDataSeries[proto]);
+					
+					//This system purges the unneccesary parts of protoDataSeries, so that we only get dataSeries's's :)
+								//we studied the patterns, and the split gives the following pattern of usable and unusable data:
+									// un == unusable, us == usable
+									//un, us, un, un, un, us, un, un, un, us... ... us, un, un, un.
+					
+					
+									//PS. i think we could have just used keySet() instead of this fancy if-tree :)))
+					
+					if(proto != 0) {
+						if (proto != protoDataSeries.length-1 || proto != protoDataSeries.length-2 || proto != protoDataSeries.length-3) {
+							
+							if(modulaTest % 4 == 0) {
+								//System.out.println("Succ"+protoDataSeries[proto]);
+								main.Main.window.setDataSeries(protoDataSeries[proto]);
+							}
+							modulaTest++;
+						}
+					}
+				}
+				
+				
+			}
+			
+			
+			
+			
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
 			if(datapoint > max) {
 				max = datapoint;
@@ -72,9 +134,10 @@ public class JsonReader {
 			if(datapoint < min || min == -1) {
 				min = datapoint;
 			}
+			
+			//SORTS EVERYTHING ACCODRING TO DATE
 			datapointSorter.add(datapoint);
 			dateSorter.add(arrayOfKeys2.get(i));
-			//SORT EVERYTHING
 			int x, y; 
 			String key;
 			double key2;
@@ -96,34 +159,28 @@ public class JsonReader {
 			       }
 			       dateSorter.set(y+1, key);
 			       datapointSorter.set(y+1, key2);
-			   } 
-
-			
-			
-			
-			
+			   } 	
 		}
+		
 		for (int j = 0; j < dateSorter.size(); j++) {
 			datapoints.add(datapointSorter.get(j));
-			log += "Date: " + dateSorter.get(j) + ": "+datapointSorter.get(j) + "\n";
-			//insert graph functionality here
-			//blabla = data.getString(dataSeries);	
+			log += "Date: " + dateSorter.get(j) + ": "+datapointSorter.get(j) + "\n";	
 		}
+		
+		//Get first and last date from ArrayList dateSorter
+		main.Main.window.graph.setFirstX(dateSorter.get(0)); 
+		main.Main.window.graph.setLastX(dateSorter.get(dateSorter.size() -1));
+
 		
 		System.out.println(min);
 		main.Main.window.graph.setMaxScore(max);
-		main.Main.window.graph.setMinScore(min);
+		//main.Main.window.graph.setMinScore(min);
 		
 		main.Main.window.graph.setScore(datapoints);
 		//Window.upperRight.revalidate();
 		//Should return information about what was downloaded, not all content.
 		return log;
 		
-	}
-
-
-	public static String readData(String selectedItem) {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 }

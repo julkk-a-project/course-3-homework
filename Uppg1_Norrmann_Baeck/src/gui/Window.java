@@ -1,13 +1,14 @@
 package gui;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -15,50 +16,45 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-
 
 public class Window extends JFrame {
+	
+	 
 	private static final long serialVersionUID = 1L;
-	
-	//static GraphicsConfiguration gc;
-	
 	
 	
 	private final JSplitPane splitPane;  	// split the window in right and left
-	private final JSplitPane leftSplitPane;
-    private final JPanel upperRight;      	// container panel for upper right side
-    private final JPanel upperLeft;    		// container panel for upper left side
-    //private final JPanel downRight; 		// container panel for upper right side
-    private final JPanel downLeft;			// container panel for down left side
-    public static Graph graph;						// our graph
-    //private final JScrollPane scrollPane; // makes the text scrollable
-    public JTextArea textArea;     // the text
-    //private final JPanel inputPanel;      // under the text a container for all the input elements
-    //private final JTextField textField;   // a textField for the text the user inputs
-    //private final JButton button;         // and a "send" button
+	private final JSplitPane leftSplitPane; // splits textArea from buttons
+    private final JPanel upperRight;      	// container panel for graph
+    private final JPanel upperLeft;    		// container panel for buttons
+    private final JPanel downLeft;			// container panel for textArea
+    public Graph graph;						// our graph
+    public JTextArea textArea;     			// the textArea
+    
+    private List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
+    private JComboBox<String> dataSeries;		//dataSeries alternatives
+    
+    boolean hasData = false;
 	
+    //constructor
 	public Window(){
+		
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
 		
 		
 		upperLeft = new JPanel(new GridBagLayout());
-		//splitPane.add(upperLeft);
 		
 		
 		upperRight = new JPanel(new GridBagLayout());
-		//splitPane.add(upperRight);
-
 		
-		//downRight = new JPanel(new GridBagLayout());
-		//splitPane.add(downRight);
+		
+		/*downRight = new JPanel(new GridBagLayout());
+		splitPane.add(downRight);*/
 		
 		
 		downLeft = new JPanel();
-		//splitPane.add(downLeft);
 		
 		
 		this.setLayout(new GridLayout());
@@ -66,19 +62,19 @@ public class Window extends JFrame {
 		
 
 		leftSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);  // we want it to split the window horizontally
-		leftSplitPane.setDividerLocation(300);                    	// the initial position of the divider is 400 (our window is 800 pixels high)
-		leftSplitPane.setTopComponent(upperLeft);                  	// at the top we want our "topPanel"
+		leftSplitPane.setDividerLocation(300);                    // the initial position of the divider is 400 (our window is 800 pixels high)
+		leftSplitPane.setTopComponent(upperLeft);                 // at the top we want our "topPanel"
 		leftSplitPane.setBottomComponent(downLeft);
 		
 		
 		splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);  // we want it to split the window horizontally
         splitPane.setDividerLocation(400);                    	// the initial position of the divider is 400 (our window is 800 pixels high)
-        splitPane.setTopComponent(leftSplitPane);                  	// at the top we want our "topPanel"
+        splitPane.setTopComponent(leftSplitPane);               // at the top we want our "topPanel"
         splitPane.setBottomComponent(upperRight);
 		
 		this.setTitle("My graph");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(1200, 800);
+		this.setSize(1920, 1080); //1080p
 		this.setResizable(true);
 		
 		this.setLocationRelativeTo(null);
@@ -86,10 +82,24 @@ public class Window extends JFrame {
 		JButton button1 = new JButton("--- Do query ---");		//new button
 		
 		
-		String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
-		JComboBox<String> dataSeries = new JComboBox<String>(dataSeriesString);	//5 dropdownboxes
+		//5 dropdownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
+		
+		
+		
+		//initializes dataSeries list:
+	   
+		dataSeriesListString = new ArrayList<String>();
+		
+		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume", null, null, null};
+		
+		dataSeries = new JComboBox<String>();	
 
-		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
+		
+		
+		
+		//"static" comboboxes:
+		
+		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
 				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
 		JComboBox<String> timeSeries = new JComboBox<String>(timeSeriesString);
 
@@ -103,14 +113,15 @@ public class Window extends JFrame {
 		JComboBox<String> outputSize = new JComboBox<String>(outputSizeString);
 		
 		
-
 		
+
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.5;
 		//c.fill = GridBagConstraints.NORTH;
 		
-
+		
+		//positions for the labels of dropDownBoxes
 		c.gridx = 0;
 		c.gridy = 0;
 		upperLeft.add(new Label("Data Series"), c);
@@ -136,10 +147,8 @@ public class Window extends JFrame {
 		upperLeft.add(new Label("Output Size"), c);
 
 
-		
-		
 
-		
+		//position for our dropDownBoxes
 		c.gridx = 1;
 		c.gridy = 0;
 		upperLeft.add(dataSeries, c);
@@ -164,32 +173,21 @@ public class Window extends JFrame {
 		c.gridy = 5;
 		upperLeft.add(button1, c);
 		
-	
+		
+		
+		//textArea
 		textArea = new JTextArea (25,33);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
-		//textArea.append("\nHey gorgeous\n\n\nYou look nice today\n\n\nHope you will have a wonderful day\n\n\nWe sure as hell will at prog III\n\n\nLOL\n\n\n...\n\n\n...\n\n\nThat's enough for one day\n\nI'm outta here\n\n\nGoodbye");
 		
-		//downLeft.add(textArea);
-		
+		//position for textArea
 		downLeft.add(scroll,c);
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		button1.addActionListener(new ActionListener(){			//settings for what happens when we push "Do query"-button (button1)
-			
-			int size = 0;
+		//actionListener for "---Do query---"-button (button1)
+		button1.addActionListener(new ActionListener(){			
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -200,33 +198,59 @@ public class Window extends JFrame {
 				}
 				textArea.append((data.JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
 				upperRight.setVisible(true);
-				size++;
-				System.out.println("You have pushed the button " + size + " times");
+				hasData = true;
+				Collections.sort(dataSeriesListString);
+				updateDataSeries();
 				main.Main.window.packMe();
 			}
 		});
 		
-
 		
 		
-		
-		dataSeries.addActionListener(new ActionListener(){			//bla
+		//actionListener for dataSeries
+		dataSeries.addActionListener(new ActionListener(){			
 			
-			//int size = 0;
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					graph.resetScore();
-				}catch(Exception e){
-					System.out.println("No clear needed at first run");
+				System.out.println((String) dataSeries.getSelectedItem());
+				if(hasData) {
+					try {
+						graph.resetScore();
+					}catch(Exception e){
+						System.out.println("No clear needed at first run");
+					}
+					textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");
+					
+					
+					main.Main.window.packMe();
+				}else {
+					textArea.append("**no data to read**\n");
 				}
-				textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");
-				upperRight.setVisible(true);
+			}
 				
-				System.out.println("Bobs and vagin");
+		});
+		
+		
+
+		//actionListener for timeSeries
+		timeSeries.addActionListener(new ActionListener(){			
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				if (timeSeries.getSelectedItem() == "TIME_SERIES_INTRADAY") {
+					timeInterval.enable();
+					outputSize.enable();
+				}else {
+					timeInterval.disable();
+					outputSize.disable();
+				}
+
+				
 				main.Main.window.packMe();
 			}
+				
 		});
 		
 		
@@ -234,9 +258,7 @@ public class Window extends JFrame {
 		
 		
 		
-		
-		
-
+		//graph
 		graph = new Graph();
 		GridBagConstraints d = new GridBagConstraints();
 		d.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -244,22 +266,50 @@ public class Window extends JFrame {
 		d.fill = GridBagConstraints.NORTH;
 		
 
-		//d.gridx = 0;
-		//d.gridy = 0;
-		//upperRight.add(new Label("meme"), d);
+		/*d.gridx = 0;
+		d.gridy = 0;
+		upperRight.add(new Label((String) dataSeries.getSelectedItem()), d);*/
 		
-
 		d.gridx = 0;
 		d.gridy = 1;
 		upperRight.add(graph, d);
 		
-		this.setVisible(true);
-		this.revalidate();
+
 		this.packMe();
+		this.setVisible(true);
 	}
+	
 	public void packMe() {
 		this.repaint();
 		this.revalidate();
+		this.setVisible(true);
 	}
+	
+	
+	public void resetDataSeries() {
+		dataSeriesListString.clear();
+	}
+	
+	public void setDataSeries(String dataSeries){
+		dataSeriesListString.add(dataSeries);
+	}
+	public void updateDataSeries() {
+		dataSeries.removeAllItems();
+		int itemCount = dataSeries.getItemCount();
+		for (int i = 0; i < dataSeriesListString.size(); i++) {
+			dataSeries.insertItemAt(dataSeriesListString.get(i), i);
+			//dataSeries.removeItemAt(i+1);
+		}
+		if(itemCount > dataSeriesListString.size()) {
+			for (int i = dataSeriesListString.size(); i < itemCount; i++) {
+				dataSeries.removeItemAt(i);
+			}
+		}
+	}
+
+	public boolean DataSeriesEmpty() {
+		return dataSeriesListString.isEmpty();
+	}
+	
 }
 

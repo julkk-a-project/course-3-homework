@@ -7,16 +7,17 @@ public class DataHandler {
 	
 	public static String getData(String url) {
 		
-		//Gör så att man inte i onödan laddar ner hela skiten om om man redan har samma set från förr.
-		if (url.equals(oldUrl)) {
+		//So we can look at all dataSeries without downloading more than once.
+		if (url.equals(oldUrl) || url.equals("old")) {
 			main.Main.window.textArea.append("*No Download Needed*\n");
 			return data;
-		}
-		oldUrl = url;
-		data = WebDownloader.testIt(url);
-		return data;
-		
-		
+		} else {
+			oldUrl = url;
+			main.Main.window.textArea.append("****Downloading****\n");
+			
+			data = WebDownloader.testIt(url);
+			main.Main.window.textArea.append("****Downloaded****\n");
+			return data;
+		}	
 	}
-
 }
