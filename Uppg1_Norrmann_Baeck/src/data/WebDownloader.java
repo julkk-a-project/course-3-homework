@@ -1,3 +1,4 @@
+//Using recommended code, with changes to fit our own program
 package data;
 
 import java.net.MalformedURLException;
@@ -18,11 +19,12 @@ public class WebDownloader {
 	     url = new URL(https_url);
 	     HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
 
-	     //dumpl all cert info <----not needed at all according to teacher.. altså för vår projekt
-	     //print_https_cert(con);
+	     /*Not needed:
+	        dumpl all cert info 
+	     	print_https_cert(con);
 
-	     //dump all the content <-- no print needed, but need json parse
-		 //print_content(con);
+	     	dump all the content
+		 	print_content(con);*/
 
 	      return print_content(con);
 	      
@@ -31,10 +33,11 @@ public class WebDownloader {
     	  } catch (IOException e) {
     		  e.printStackTrace();
     		  }
-	return "Fail";
+      return "Fail";
     }
 	
-	/*private static void print_https_cert(HttpsURLConnection con){
+	/*Not needed:
+	 private static void print_https_cert(HttpsURLConnection con){
 		if(con!=null){
 			try {
 				System.out.println("Response Code : " + con.getResponseCode());
@@ -65,26 +68,26 @@ public class WebDownloader {
 		if(con!=null){
 			try {
 				main.Main.window.textArea.append("**** Content of the URL ****\n");
-				//System.out.println("**** Content of the URL ****");
-				BufferedReader br =
-						new BufferedReader(
-								new InputStreamReader(con.getInputStream()));
+				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				String input;
 				int i = 0;
 				
 				while ((input = br.readLine()) != null){
 					string += input;
 					i++;
+					
 					if (i % 100 == 0) {
-						main.Main.window.textArea.append(i+" lines...\n");
+						main.Main.window.textArea.append(i + " lines...\n");
 						main.Main.window.packMe();
-					}
+						}
 					}
 				br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				}
 			}
+		
 		main.Main.window.resetDataSeries();
 		return string;
 		}

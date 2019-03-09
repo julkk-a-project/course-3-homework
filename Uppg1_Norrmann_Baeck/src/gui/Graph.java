@@ -1,4 +1,6 @@
+//Cred for this code to "Hovercraft Full Of Eels" at StackOverflow. Edited by us.
 package gui;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,25 +27,28 @@ public class Graph extends JPanel {
    private static final int GRAPH_POINT_WIDTH = 5;
    private static int Y_HATCH_CNT = 10;
    public List<Double> scores;
-   //private double MIN_SCORE = 0; //not used yet (maybe never?)
-
+   
    private String firstX = "THIS IS AN";
    private String lastX = "EXAMPLE DATASET";
 
-   public Graph() {
-	   
+   
+   public Graph() { 
 	   //Generates default set
 	   double temp = 27;
 	   List<Double> tempList = new ArrayList<Double>();
+	   
 	   for(int i = 0; i < 27; i++) {
 		   tempList.add(temp);
 	   }
+	   
 	   scores = tempList;
    }
+   
    public Graph(List<Double> scores) {
 	      this.scores = scores;
 	   }
 
+   
    @Override
    protected void paintComponent(Graphics g) {
       super.paintComponent(g);
@@ -89,7 +94,8 @@ public class Graph extends JPanel {
           g2.drawLine(x0, y0, x1, y1);
       }
       
-      /*for (int i = 0; i < Y_HATCH_CNT; i++) {
+      /*Not needed:
+         for (int i = 0; i < Y_HATCH_CNT; i++) {
          int x0 = BORDER_GAP;
          int x1 = GRAPH_POINT_WIDTH + BORDER_GAP;
          int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
@@ -112,15 +118,16 @@ public class Graph extends JPanel {
              g2.setColor(Color.BLACK);
              
              String xLabel = firstX+"                                                                                                                                                           "+lastX;
-             FontMetrics metrics = g2.getFontMetrics();
-             int labelWidth = metrics.stringWidth(xLabel);
+             /*Nod needed:
+               FontMetrics metrics = g2.getFontMetrics();
+               int labelWidth = metrics.stringWidth(xLabel);
+               */
              g2.drawString(xLabel, x0, y0 + 15);
          }
          
-         
          g2.drawLine(x0, y0, x1, y1);
       }
-
+      
       Stroke oldStroke = g2.getStroke();
       g2.setColor(GRAPH_COLOR);
       g2.setStroke(GRAPH_STROKE);
@@ -152,7 +159,7 @@ public class Graph extends JPanel {
       return new Dimension(PREF_W, PREF_H);
    }
 
-   /*
+   /* Not needed:
    private static void createAndShowGui() {
       List<Integer> scores = new ArrayList<Integer>();
       Random random = new Random();
@@ -174,7 +181,7 @@ public class Graph extends JPanel {
    }*/
    
    
-   //OUR EDITS:
+   //OUR MAIN EDITS:
    
    public void setScore(List<Double> scores) {
 	   this.scores = scores;
@@ -187,11 +194,6 @@ public class Graph extends JPanel {
    public void setMaxScore(double max) {
 	   this.MAX_SCORE = max;
    }
-   
-   /*public void setMinScore(double min) {
-	   this.MIN_SCORE = min;
-	   //Y_HATCH_CNT = (int) (max/100);
-   }*/
    
    public double getMaxScore(){
 	   return MAX_SCORE;
@@ -208,12 +210,4 @@ public class Graph extends JPanel {
    public void setLastX(String lastX) {
 	   this.lastX = lastX;
    }
-   
-   /*public static void main(String[] args) {
-      SwingUtilities.invokeLater(new Runnable() {
-         public void run() {
-            createAndShowGui();
-         }
-      });
-   }*/
 }

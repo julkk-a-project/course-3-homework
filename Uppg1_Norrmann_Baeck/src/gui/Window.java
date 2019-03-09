@@ -44,17 +44,16 @@ public class Window extends JFrame {
 		leftSplitPane = new JSplitPane();
 		
 		
+		//to split window
 		upperLeft = new JPanel(new GridBagLayout());
 		
-		
 		upperRight = new JPanel(new GridBagLayout());
-		
 		
 		/*downRight = new JPanel(new GridBagLayout());
 		splitPane.add(downRight);*/
 		
-		
 		downLeft = new JPanel();
+
 		
 		
 		this.setLayout(new GridLayout());
@@ -82,23 +81,14 @@ public class Window extends JFrame {
 		JButton button1 = new JButton("--- Do query ---");		//new button
 		
 		
-		//5 dropdownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
-		
-		
+		//5 dropDownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
 		
 		//initializes dataSeries list:
-	   
 		dataSeriesListString = new ArrayList<String>();
-		
 		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume", null, null, null};
-		
 		dataSeries = new JComboBox<String>();	
-
 		
-		
-		
-		//"static" comboboxes:
-		
+		//4 "static" comboboxes:
 		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
 				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
 		JComboBox<String> timeSeries = new JComboBox<String>(timeSeriesString);
@@ -120,28 +110,25 @@ public class Window extends JFrame {
 		c.weightx = 0.5;
 		//c.fill = GridBagConstraints.NORTH;
 		
+
 		
 		//positions for the labels of dropDownBoxes
 		c.gridx = 0;
 		c.gridy = 0;
 		upperLeft.add(new Label("Data Series"), c);
 		
-
 		c.gridx = 0;
 		c.gridy = 1;
 		upperLeft.add(new Label("Time Series"), c);
 		
-
 		c.gridx = 0;
 		c.gridy = 2;
 		upperLeft.add(new Label("Symbol"), c);
-
 
 		c.gridx = 0;
 		c.gridy = 3;
 		upperLeft.add(new Label("Time Interval"), c);
 		
-
 		c.gridx = 0;
 		c.gridy = 4;
 		upperLeft.add(new Label("Output Size"), c);
@@ -196,6 +183,7 @@ public class Window extends JFrame {
 				}catch(Exception e){
 					System.out.println("No clear needed at first run");
 				}
+				
 				textArea.append((data.JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
 				upperRight.setVisible(true);
 				hasData = true;
@@ -214,20 +202,19 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println((String) dataSeries.getSelectedItem());
 				if(hasData) {
+					
 					try {
 						graph.resetScore();
 					}catch(Exception e){
 						System.out.println("No clear needed at first run");
 					}
-					textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");
 					
-					
+					textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");			
 					main.Main.window.packMe();
 				}else {
 					textArea.append("**no data to read**\n");
 				}
-			}
-				
+			}		
 		});
 		
 		
@@ -237,26 +224,20 @@ public class Window extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+					
 				if (timeSeries.getSelectedItem() == "TIME_SERIES_INTRADAY") {
-					timeInterval.enable();
+					timeInterval.enable();	//we know this is an old method, but we wanted to use it anyway
 					outputSize.enable();
 				}else {
 					timeInterval.disable();
 					outputSize.disable();
 				}
-
 				
 				main.Main.window.packMe();
-			}
-				
+			}		
 		});
 		
-		
-		
-		
-		
+	
 		
 		//graph
 		graph = new Graph();
@@ -279,6 +260,7 @@ public class Window extends JFrame {
 		this.setVisible(true);
 	}
 	
+	//to get preferred size on content
 	public void packMe() {
 		this.repaint();
 		this.revalidate();
@@ -286,27 +268,34 @@ public class Window extends JFrame {
 	}
 	
 	
+	//to reset dataSeries
 	public void resetDataSeries() {
 		dataSeriesListString.clear();
 	}
 	
+	//to set dataSeries
 	public void setDataSeries(String dataSeries){
 		dataSeriesListString.add(dataSeries);
 	}
+	
+	//to update dataSeries
 	public void updateDataSeries() {
 		dataSeries.removeAllItems();
 		int itemCount = dataSeries.getItemCount();
+		
 		for (int i = 0; i < dataSeriesListString.size(); i++) {
 			dataSeries.insertItemAt(dataSeriesListString.get(i), i);
 			//dataSeries.removeItemAt(i+1);
 		}
+		
 		if(itemCount > dataSeriesListString.size()) {
-			for (int i = dataSeriesListString.size(); i < itemCount; i++) {
+			for (int i = dataSeriesListString.size(); i > itemCount; i++) {
 				dataSeries.removeItemAt(i);
 			}
 		}
 	}
 
+	//to check if dataSeries is empty
 	public boolean DataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();
 	}
