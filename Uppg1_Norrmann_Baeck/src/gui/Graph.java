@@ -183,30 +183,37 @@ public class Graph extends JPanel {
    
    //OUR MAIN EDITS:
    
+   //sets score
    public void setScore(List<Double> scores) {
 	   this.scores = scores;
    }
    
+   //resets score
    public void resetScore() {
 	   scores.clear();
    }
    
+   //sets maxScore
    public void setMaxScore(double max) {
 	   this.MAX_SCORE = max;
    }
    
+   //gets maxScore
    public double getMaxScore(){
 	   return MAX_SCORE;
    }
    
-    public double getMinScore() {
+   //gets minScore
+   public double getMinScore() {
     	return 0;
    }
    
+   //sets first x value
    public void setFirstX(String firstX) {
  	   this.firstX = firstX;
    }
    
+   //sets last x value
    public void setLastX(String lastX) {
 	   this.lastX = lastX;
    }

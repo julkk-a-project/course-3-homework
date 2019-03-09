@@ -224,13 +224,14 @@ public class Window extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-					
+				
+				//timeInterval & outputSize visible for intraday and not visible for other options
 				if (timeSeries.getSelectedItem() == "TIME_SERIES_INTRADAY") {
-					timeInterval.enable();	//we know this is an old method, but we wanted to use it anyway
-					outputSize.enable();
+					timeInterval.setEnabled(true);	
+					outputSize.setEnabled(true);
 				}else {
-					timeInterval.disable();
-					outputSize.disable();
+					timeInterval.setEnabled(false);
+					outputSize.setEnabled(false);
 				}
 				
 				main.Main.window.packMe();
@@ -298,7 +299,5 @@ public class Window extends JFrame {
 	//to check if dataSeries is empty
 	public boolean DataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();
-	}
-	
+	}	
 }
-

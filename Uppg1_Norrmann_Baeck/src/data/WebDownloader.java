@@ -90,5 +90,5 @@ public class WebDownloader {
 		
 		main.Main.window.resetDataSeries();
 		return string;
-		}
+	}
 }
