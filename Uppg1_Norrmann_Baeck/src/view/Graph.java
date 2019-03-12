@@ -1,5 +1,5 @@
-//Cred for this code to "Hovercraft Full Of Eels" at StackOverflow. Edited by us.
-package gui;
+//Cred for this code to "Hovercraft Full Of Eels" at StackOverflow. Edited by us. He probably copied it from somewhere else too.
+package view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

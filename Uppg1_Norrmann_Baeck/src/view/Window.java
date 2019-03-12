@@ -1,4 +1,4 @@
-package gui;
+package view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,16 +25,23 @@ public class Window extends JFrame {
 	
 	private final JSplitPane splitPane;  	// split the window in right and left
 	private final JSplitPane leftSplitPane; // splits textArea from buttons
-    private final JPanel upperRight;      	// container panel for graph
+    public final JPanel upperRight;      	// container panel for graph
     private final JPanel upperLeft;    		// container panel for buttons
     private final JPanel downLeft;			// container panel for textArea
     public Graph graph;						// our graph
     public JTextArea textArea;     			// the textArea
+    public JButton doQueryButton;			// our DoQuery button ;)
     
-    private List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
-    private JComboBox<String> dataSeries;		//dataSeries alternatives
+    public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
+    public JComboBox<String> dataSeries;		//dataSeries alternatives
+	public JComboBox<String> timeSeries;		//  ---||---
+	public JComboBox<String> symbol;
+	public JComboBox<String> timeInterval;
+	public JComboBox<String> outputSize;
     
     boolean hasData = false;
+
+
 	
     //constructor
 	public Window(){
@@ -78,29 +85,29 @@ public class Window extends JFrame {
 		
 		this.setLocationRelativeTo(null);
 		
-		JButton button1 = new JButton("--- Do query ---");		//new button
+		doQueryButton = new JButton("--- Do query ---");		//new button
 		
 		
 		//5 dropDownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
 		
 		//initializes dataSeries list:
 		dataSeriesListString = new ArrayList<String>();
-		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume", null, null, null};
+		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
 		dataSeries = new JComboBox<String>();	
 		
 		//4 "static" comboboxes:
 		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
 				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
-		JComboBox<String> timeSeries = new JComboBox<String>(timeSeriesString);
+		timeSeries = new JComboBox<String>(timeSeriesString);
 
 		String[] symbolString = {"AAPL", "GOOG", "INTC", "KO", "MSFT", "WMT"};
-		JComboBox<String> symbol = new JComboBox<String>(symbolString);
+		symbol = new JComboBox<String>(symbolString);
 
 		String[] timeIntervalString = {"1min", "5min", "15min", "30min", "60min"};
-		JComboBox<String> timeInterval = new JComboBox<String>(timeIntervalString);
+		timeInterval = new JComboBox<String>(timeIntervalString);
 
 		String[] outputSizeString = {"compact", "full"};
-		JComboBox<String> outputSize = new JComboBox<String>(outputSizeString);
+		outputSize = new JComboBox<String>(outputSizeString);
 		
 		
 		
@@ -158,7 +165,7 @@ public class Window extends JFrame {
 
 		c.gridx = 1;
 		c.gridy = 5;
-		upperLeft.add(button1, c);
+		upperLeft.add(doQueryButton, c);
 		
 		
 		
@@ -173,49 +180,6 @@ public class Window extends JFrame {
 		
 		
 		
-		//actionListener for "---Do query---"-button (button1)
-		button1.addActionListener(new ActionListener(){			
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					graph.resetScore();
-				}catch(Exception e){
-					System.out.println("No clear needed at first run");
-				}
-				
-				textArea.append((data.JsonReader.readWeb((String) dataSeries.getSelectedItem(), (String) timeSeries.getSelectedItem(), (String) symbol.getSelectedItem(), (String) timeInterval.getSelectedItem(), (String) outputSize.getSelectedItem()))+"\n");
-				upperRight.setVisible(true);
-				hasData = true;
-				Collections.sort(dataSeriesListString);
-				updateDataSeries();
-				main.Main.window.packMe();
-			}
-		});
-		
-		
-		
-		//actionListener for dataSeries
-		dataSeries.addActionListener(new ActionListener(){			
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println((String) dataSeries.getSelectedItem());
-				if(hasData) {
-					
-					try {
-						graph.resetScore();
-					}catch(Exception e){
-						System.out.println("No clear needed at first run");
-					}
-					
-					textArea.append((data.JsonReader.readData((String) dataSeries.getSelectedItem()))+"\n");			
-					main.Main.window.packMe();
-				}else {
-					textArea.append("**no data to read**\n");
-				}
-			}		
-		});
 		
 		
 
@@ -224,15 +188,15 @@ public class Window extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
 				//timeInterval & outputSize visible for intraday and not visible for other options
+				boolean show;
 				if (timeSeries.getSelectedItem() == "TIME_SERIES_INTRADAY") {
-					timeInterval.setEnabled(true);	
-					outputSize.setEnabled(true);
+					show = true;
 				}else {
-					timeInterval.setEnabled(false);
-					outputSize.setEnabled(false);
+					show = false;
 				}
+				timeInterval.setEnabled(show);	
+				outputSize.setEnabled(show);
 				
 				main.Main.window.packMe();
 			}		

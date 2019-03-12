@@ -1,0 +1,58 @@
+package controller;
+
+import model.JsonParser;
+import model.WebDownloader;
+
+public class DataHandler {
+	private static String data = "";
+	private static String oldUrl = "";
+	
+	
+	public static String getData(String url) {
+		
+		//So we can look at all dataSeries without downloading more than once.
+		if (url.equals(oldUrl) || url.equals("old")) {
+			main.Main.window.textArea.append("**** No Download Needed ****\n");
+			return data;
+		} else {
+			oldUrl = url;
+			main.Main.window.textArea.append("**** Downloading ****\n");
+			
+			data = WebDownloader.testIt(url);
+			main.Main.window.textArea.append("**** Downloaded ****\n");
+			return data;
+		}	
+	}
+	
+	//to controller package
+	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
+				
+		//takes in information from webSite
+		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey=X0E92VRLD6Z3KLH0");
+			
+		try {			
+			return JsonParser.parser(json, dataSeries);
+			} catch (Exception e) {
+				if(dataSeries == null) {
+					return "**** Now select a dataSeries ****";
+				} else {
+					return "**** No \""+ dataSeries + "\" found ****";			
+				}
+			}
+	}
+		
+		
+	//2 controller package. reading data from dataSeries
+	public static String readData(String dataSeries) {
+		try {
+			String json = controller.DataHandler.getData("old");
+			return JsonParser.parser(json, dataSeries);
+		}catch(Exception e) {
+			if(dataSeries == null) {
+				return "**** Please select a dataSeries again ****";
+			}else {
+				return "**** No \""+ dataSeries + "\" found ****";						
+			}
+		}
+	}
+}

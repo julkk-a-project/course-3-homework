@@ -1,5 +1,5 @@
 //Using recommended code, with changes to fit our own program
-package data;
+package model;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,7 +9,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WebDownloader {
 
-	static String testIt(String text){
+	public static String testIt(String text){
 
       String https_url = text;
 		

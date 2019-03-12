@@ -1,3 +1,5 @@
 /DataHandler.class
 /JsonReader.class
 /WebDownloader.class
+/JsonParser.class
+/DataStorer.class
