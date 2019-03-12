@@ -1,10 +1,10 @@
 package model;
 
 public class DataStorer {
-	private static String data = "";
-	private String url = "";
+	private String data = "";
+	private String oldUrl = "";
 	
-	public static boolean hasData() {
+	public boolean hasData() {
 		if (!data.equals("")) {
 			return true;
 		} else {
@@ -20,5 +20,13 @@ public class DataStorer {
 	public void setData(String data) {
 		this.data = data;
 		
+	}
+
+	public Object getOldUrl() {
+		return oldUrl;
+	}
+
+	public void setOldUrl(String url) {
+		oldUrl = url;
 	}
 }

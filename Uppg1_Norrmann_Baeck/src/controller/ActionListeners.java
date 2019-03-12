@@ -4,57 +4,57 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 
+import model.DataStorer;
 import view.Window;
 
 
 public class ActionListeners {
 	
 	
-	public ActionListeners(Window window) {
+	public ActionListeners() {
 	
 
 		//actionListener for "---Do query---"-button (button1)
-		window.doQueryButton.addActionListener(new ActionListener(){			
+		main.Main.window.doQueryButton.addActionListener(new ActionListener(){			
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					window.graph.resetScore();
+					main.Main.window.graph.resetScore();
 				}catch(Exception e){
 					System.out.println("No clear needed at first run");
 				}
 						
-				window.textArea.append((controller.DataHandler.readWeb((String) window.dataSeries.getSelectedItem(), (String) window.timeSeries.getSelectedItem(), (String) window.symbol.getSelectedItem(), (String) window.timeInterval.getSelectedItem(), (String) window.outputSize.getSelectedItem()))+"\n");
+				main.Main.window.textArea.append((controller.DataHandler.readWeb((String) main.Main.window.dataSeries.getSelectedItem(), (String) main.Main.window.timeSeries.getSelectedItem(), (String) main.Main.window.symbol.getSelectedItem(), (String) main.Main.window.timeInterval.getSelectedItem(), (String) main.Main.window.outputSize.getSelectedItem()))+"\n");
 				//window.upperRight.setVisible(true);
 				
 				
 				//handles dataSeries data
-				Collections.sort(window.dataSeriesListString);
-				window.updateDataSeries();
-				window.packMe();
+				Collections.sort(main.Main.window.dataSeriesListString);
+				main.Main.window.updateDataSeries();
+				main.Main.window.packMe();
 			}
 		});
 				
 				
 				
 		//actionListener for dataSeries
-		window.dataSeries.addActionListener(new ActionListener(){			
+		main.Main.window.dataSeries.addActionListener(new ActionListener(){			
 					
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println((String) window.dataSeries.getSelectedItem());
-				if(model.DataStorer.hasData()) {
-							
+				System.out.println((String) main.Main.window.dataSeries.getSelectedItem());
+				if(main.Main.dataStorer.hasData()) {
 					try {
-						window.graph.resetScore();
+						main.Main.window.graph.resetScore();
 					}catch(Exception e){
 						System.out.println("No clear needed at first run");
 					}
 							
-					window.textArea.append((controller.DataHandler.readData((String) window.dataSeries.getSelectedItem()))+"\n");			
-					window.packMe();
+					main.Main.window.textArea.append((controller.DataHandler.readData((String) main.Main.window.dataSeries.getSelectedItem()))+"\n");			
+					main.Main.window.packMe();
 				}else {
-					window.textArea.append("**no data to read**\n");
+					main.Main.window.textArea.append("**** No data to read ****\n");
 				}
 			}		
 		});

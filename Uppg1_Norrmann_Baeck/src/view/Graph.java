@@ -25,7 +25,7 @@ public class Graph extends JPanel {
    private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
    private static final int GRAPH_POINT_WIDTH = 5;
-   private static int Y_HATCH_CNT = 10;
+   private static final int Y_HATCH_CNT = 10;
    public List<Double> scores;
    
    private String firstX = "THIS IS AN";
@@ -44,9 +44,9 @@ public class Graph extends JPanel {
 	   scores = tempList;
    }
    
-   public Graph(List<Double> scores) {
+   /*public Graph(List<Double> scores) {
 	      this.scores = scores;
-	   }
+	   }*/
 
    
    @Override

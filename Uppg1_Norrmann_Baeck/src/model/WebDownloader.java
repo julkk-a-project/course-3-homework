@@ -15,7 +15,6 @@ public class WebDownloader {
 		
       URL url;
       try {
-
 	     url = new URL(https_url);
 	     HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
 
