@@ -1,5 +1,5 @@
 //Using recommended code, with changes to fit our own program
-package model;
+package controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;

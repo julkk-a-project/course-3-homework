@@ -22,7 +22,7 @@ public class Graph extends JPanel {
    private static final int BORDER_GAP = 100;
    private static final int LABEL_GAP = 0;
    private static final Color GRAPH_COLOR = Color.cyan;
-   private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
+   private static Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
    private static final int GRAPH_POINT_WIDTH = 5;
    private static final int Y_HATCH_CNT = 10;
@@ -33,6 +33,14 @@ public class Graph extends JPanel {
 
    
    public Graph() { 
+	   /* fun stuff
+	   try {
+		   GRAPH_POINT_COLOR = new Color(main.Main.inis.getKeyValue("GRAPH_POINT_COLOR"));
+	   }
+	   catch(NullPointerException npe) {
+		   
+	   }
+	   */
 	   //Generates default set
 	   double temp = 27;
 	   List<Double> tempList = new ArrayList<Double>();

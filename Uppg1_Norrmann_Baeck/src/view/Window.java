@@ -47,6 +47,7 @@ public class Window extends JFrame {
 	public Window(){
 		
 		
+		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
 		
@@ -95,19 +96,19 @@ public class Window extends JFrame {
 		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
 		dataSeries = new JComboBox<String>();	
 		
-		//4 "static" comboboxes:
-		String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
-				"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
-		timeSeries = new JComboBox<String>(timeSeriesString);
+		//4 "static" comboBoxes:
+		//String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
+		//		"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
+		timeSeries = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_SERIES"));
 
-		String[] symbolString = {"AAPL", "GOOG", "INTC", "KO", "MSFT", "WMT"};
-		symbol = new JComboBox<String>(symbolString);
+		//String[] symbolString = {"AAPL", "GOOG", "INTC", "KO", "MSFT", "WMT"};
+		symbol = new JComboBox<String>(main.Main.inis.getKeyValue("SYMBOL"));
 
-		String[] timeIntervalString = {"1min", "5min", "15min", "30min", "60min"};
-		timeInterval = new JComboBox<String>(timeIntervalString);
+		//String[] timeIntervalString = {"1min", "5min", "15min", "30min", "60min"};
+		timeInterval = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_INTERVAL"));
 
-		String[] outputSizeString = {"compact", "full"};
-		outputSize = new JComboBox<String>(outputSizeString);
+		//String[] outputSizeString = {"compact", "full"};
+		outputSize = new JComboBox<String>(main.Main.inis.getKeyValue("OUTPUT_SIZE"));
 		
 		
 		

@@ -1,7 +1,6 @@
 package controller;
 
 import model.JsonParser;
-import model.WebDownloader;
 
 public class DataHandler {
 	//private static String data = "";
@@ -28,7 +27,7 @@ public class DataHandler {
 	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
 				
 		//takes in information from webSite
-		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey=X0E92VRLD6Z3KLH0");
+		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey="+main.Main.inis.getKeyValueInt(0, "API_KEY"));
 			
 		try {			
 			return JsonParser.parser(json, dataSeries);
