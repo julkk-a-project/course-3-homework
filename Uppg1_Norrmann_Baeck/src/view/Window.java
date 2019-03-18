@@ -28,11 +28,13 @@ public class Window extends JFrame {
     public final JPanel upperRight;      	// container panel for graph
     private final JPanel upperLeft;    		// container panel for buttons
     private final JPanel downLeft;			// container panel for textArea
+    
     public Graph graph;						// our graph
     public JTextArea textArea;     			// the textArea
-    public JButton doQueryButton;			// our DoQuery button ;)
-    
+    public JTextArea apiTextArea;    		// the textArea
+    public JButton doQueryButton;			// our DoQuery button ;) 
     public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
+    
     public JComboBox<String> dataSeries;		//dataSeries alternatives
 	public JComboBox<String> timeSeries;		//  ---||---
 	public JComboBox<String> symbol;
@@ -45,8 +47,6 @@ public class Window extends JFrame {
 	
     //constructor
 	public Window(){
-		
-		
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
@@ -67,12 +67,12 @@ public class Window extends JFrame {
 		this.setLayout(new GridLayout());
 		this.add(splitPane);
 		
+	
 
 		leftSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);  // we want it to split the window horizontally
 		leftSplitPane.setDividerLocation(300);                    // the initial position of the divider is 400 (our window is 800 pixels high)
 		leftSplitPane.setTopComponent(upperLeft);                 // at the top we want our "topPanel"
 		leftSplitPane.setBottomComponent(downLeft);
-		
 		
 		splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);  // we want it to split the window horizontally
         splitPane.setDividerLocation(400);                    	// the initial position of the divider is 400 (our window is 800 pixels high)
@@ -81,35 +81,34 @@ public class Window extends JFrame {
 		
 		this.setTitle("My graph");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(1920, 1080); //1080p
+		this.setSize(1920, 1080); 		//1080p
 		this.setResizable(true);
 		
 		this.setLocationRelativeTo(null);
 		
-		doQueryButton = new JButton("--- Do query ---");		//new button
+		
+		
+		//apiTextArea
+		apiTextArea = new JTextArea (main.Main.inis.getKeyValueInt(0,"API_KEY"), 1,25);
+		apiTextArea.setEditable(true);
+				
 		
 		
 		//5 dropDownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
-		
 		//initializes dataSeries list:
 		dataSeriesListString = new ArrayList<String>();
-		//String[] dataSeriesString = {"1. open", "2. high", "3. low", "4. close", "5. volume"};
 		dataSeries = new JComboBox<String>();	
 		
 		//4 "static" comboBoxes:
-		//String[] timeSeriesString = {"TIME_SERIES_INTRADAY", "TIME_SERIES_DAILY", "TIME_SERIES_DAILY_ADJUSTED", "TIME_SERIES_WEEKLY", 
-		//		"TIME_SERIES_WEEKLY_ADJUSTED", "TIME_SERIES_MONTHLY", "TIME_SERIES_MONTHLY_ADJUSTED"};
 		timeSeries = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_SERIES"));
-
-		//String[] symbolString = {"AAPL", "GOOG", "INTC", "KO", "MSFT", "WMT"};
 		symbol = new JComboBox<String>(main.Main.inis.getKeyValue("SYMBOL"));
-
-		//String[] timeIntervalString = {"1min", "5min", "15min", "30min", "60min"};
 		timeInterval = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_INTERVAL"));
-
-		//String[] outputSizeString = {"compact", "full"};
 		outputSize = new JComboBox<String>(main.Main.inis.getKeyValue("OUTPUT_SIZE"));
 		
+		
+		
+		//---Do query--- button
+		doQueryButton = new JButton("--- Do query ---");		
 		
 		
 
@@ -120,25 +119,29 @@ public class Window extends JFrame {
 		
 
 		
-		//positions for the labels of dropDownBoxes
+		//positions for the labels of API key text area and dropDownBoxes
 		c.gridx = 0;
 		c.gridy = 0;
-		upperLeft.add(new Label("Data Series"), c);
+		upperLeft.add(new Label("API Key"), c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
-		upperLeft.add(new Label("Time Series"), c);
+		upperLeft.add(new Label("Data Series"), c);
 		
 		c.gridx = 0;
 		c.gridy = 2;
+		upperLeft.add(new Label("Time Series"), c);
+		
+		c.gridx = 0;
+		c.gridy = 3;
 		upperLeft.add(new Label("Symbol"), c);
 
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 4;
 		upperLeft.add(new Label("Time Interval"), c);
 		
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 5;
 		upperLeft.add(new Label("Output Size"), c);
 
 
@@ -146,26 +149,30 @@ public class Window extends JFrame {
 		//position for our dropDownBoxes
 		c.gridx = 1;
 		c.gridy = 0;
-		upperLeft.add(dataSeries, c);
+		upperLeft.add(apiTextArea, c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		upperLeft.add(timeSeries, c);
+		upperLeft.add(dataSeries, c);
 		
 		c.gridx = 1;
 		c.gridy = 2;
-		upperLeft.add(symbol, c);
+		upperLeft.add(timeSeries, c);
 		
 		c.gridx = 1;
 		c.gridy = 3;
-		upperLeft.add(timeInterval, c);
+		upperLeft.add(symbol, c);
 		
 		c.gridx = 1;
 		c.gridy = 4;
+		upperLeft.add(timeInterval, c);
+		
+		c.gridx = 1;
+		c.gridy = 5;
 		upperLeft.add(outputSize, c);
 
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		upperLeft.add(doQueryButton, c);
 		
 		
@@ -177,10 +184,6 @@ public class Window extends JFrame {
 		
 		//position for textArea
 		downLeft.add(scroll,c);
-		
-		
-		
-		
 		
 		
 
@@ -211,17 +214,19 @@ public class Window extends JFrame {
 		d.anchor = GridBagConstraints.FIRST_LINE_START;
 		d.weightx = 0.5;
 		d.fill = GridBagConstraints.NORTH;
-		
 
 		/*d.gridx = 0;
 		d.gridy = 0;
 		upperRight.add(new Label((String) dataSeries.getSelectedItem()), d);*/
 		
+		//position for graph
 		d.gridx = 0;
 		d.gridy = 1;
 		upperRight.add(graph, d);
 		
 
+		
+		
 		this.packMe();
 		this.setVisible(true);
 	}
@@ -234,15 +239,20 @@ public class Window extends JFrame {
 	}
 	
 	
+	
 	//to reset dataSeries
 	public void resetDataSeries() {
 		dataSeriesListString.clear();
 	}
 	
+	
+	
 	//to set dataSeries
 	public void setDataSeries(String dataSeries){
 		dataSeriesListString.add(dataSeries);
 	}
+	
+	
 	
 	//to update dataSeries
 	public void updateDataSeries() {
@@ -261,6 +271,8 @@ public class Window extends JFrame {
 		}
 	}
 
+	
+	
 	//to check if dataSeries is empty
 	public boolean DataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();

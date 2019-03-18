@@ -3,6 +3,8 @@ package controller;
 import model.JsonParser;
 
 public class DataHandler {
+
+
 	//private static String data = "";
 	//private static String oldUrl = "";
 	
@@ -27,8 +29,12 @@ public class DataHandler {
 	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
 				
 		//takes in information from webSite
-		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries+"&symbol="+symbol+"&interval="+timeInterval+"&outputsize="+outputSize+"&apikey="+main.Main.inis.getKeyValueInt(0, "API_KEY"));
-			
+		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries
+														+"&symbol="+symbol+"&interval="+timeInterval
+														+"&outputsize="+outputSize+"&apikey="
+														+main.Main.inis.getKeyValueInt(0, "API_KEY"));
+		
+		
 		try {			
 			return JsonParser.parser(json, dataSeries);
 			} catch (Exception e) {

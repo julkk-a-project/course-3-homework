@@ -79,8 +79,7 @@ public class WebDownloader {
 						main.Main.window.textArea.append(i + " lines...\n");
 						main.Main.window.packMe();
 						}
-					}
-				br.close();
+				}
 				
 			} catch (IOException e) {
 				e.printStackTrace();

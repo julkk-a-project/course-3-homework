@@ -124,8 +124,12 @@ public class Graph extends JPanel {
              //g2.setColor(gridColor);
              g2.drawLine(BORDER_GAP + LABEL_GAP + 1 + GRAPH_POINT_WIDTH, y0, getWidth() - BORDER_GAP, y1);
              g2.setColor(Color.BLACK);
+             String space = "";
+             for (int spaceFor = 0; spaceFor < 155; spaceFor++) {
+            	 space += " ";
+             }
+             String xLabel = firstX + space + lastX;
              
-             String xLabel = firstX+"                                                                                                                                                           "+lastX;
              /*Nod needed:
                FontMetrics metrics = g2.getFontMetrics();
                int labelWidth = metrics.stringWidth(xLabel);
