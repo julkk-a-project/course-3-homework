@@ -7,7 +7,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +30,9 @@ public class Window extends JFrame {
     
     public Graph graph;						// our graph
     public JTextArea textArea;     			// the textArea
-    public JTextArea apiTextArea;    		// the textArea
+    public JTextArea apiTextArea;    		// the textArea for API Key
+    public JTextArea startDateTextArea;    	// the textArea for startDate
+    public JTextArea endDateTextArea;    		// the textArea for stopDate
     public JButton doQueryButton;			// our DoQuery button ;) 
     public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
     
@@ -52,14 +53,13 @@ public class Window extends JFrame {
 		leftSplitPane = new JSplitPane();
 		
 		
+		
 		//to split window
 		upperLeft = new JPanel(new GridBagLayout());
-		
 		upperRight = new JPanel(new GridBagLayout());
 		
 		/*downRight = new JPanel(new GridBagLayout());
 		splitPane.add(downRight);*/
-		
 		downLeft = new JPanel();
 
 		
@@ -107,6 +107,16 @@ public class Window extends JFrame {
 		
 		
 		
+		//startDate TextArea
+		startDateTextArea = new JTextArea ("Enter date here...", 1,10);
+		startDateTextArea.setEditable(true);
+			
+		//stopDate TextArea
+		endDateTextArea = new JTextArea ("...and here", 1,10);
+		endDateTextArea.setEditable(true);
+				
+		
+		
 		//---Do query--- button
 		doQueryButton = new JButton("--- Do query ---");		
 		
@@ -115,7 +125,7 @@ public class Window extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.5;
-		//c.fill = GridBagConstraints.NORTH;
+		c.fill = GridBagConstraints.NORTH;
 		
 
 		
@@ -143,10 +153,19 @@ public class Window extends JFrame {
 		c.gridx = 0;
 		c.gridy = 5;
 		upperLeft.add(new Label("Output Size"), c);
-
-
-
-		//position for our dropDownBoxes
+		
+		
+		c.gridx = 0;
+		c.gridy = 6;
+		upperLeft.add(new Label("Date interval"), c);
+		
+		
+		
+		
+		
+		//position for our textAreas and dropDownBoxes
+		c.gridwidth = 3;
+		
 		c.gridx = 1;
 		c.gridy = 0;
 		upperLeft.add(apiTextArea, c);
@@ -169,20 +188,43 @@ public class Window extends JFrame {
 		
 		c.gridx = 1;
 		c.gridy = 5;
-		upperLeft.add(outputSize, c);
+		upperLeft.add(outputSize, c);	
 
+
+		c.gridwidth = 1;
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		upperLeft.add(doQueryButton, c);
 		
 		
 		
-		//textArea
+		//to get dateInput on same level
+		GridBagConstraints e = new GridBagConstraints();
+		e.anchor = GridBagConstraints.FIRST_LINE_START;
+		e.weightx = 0.5;
+		e.fill = GridBagConstraints.NORTH;
+
+		e.gridx = 1;
+		e.gridy = 6;
+		upperLeft.add(startDateTextArea, e);
+		
+		e.gridx = 2;
+		e.gridy = 6;
+		upperLeft.add(new Label("-"), e);
+		
+		e.gridx = 3;
+		e.gridy = 6;
+		upperLeft.add(endDateTextArea, e);
+		
+		
+		
+		
+		//textArea Logg
 		textArea = new JTextArea (25,33);
 		JScrollPane scroll = new JScrollPane(textArea);
 		textArea.setEditable(false);
 		
-		//position for textArea
+		//position for textArea Logg
 		downLeft.add(scroll,c);
 		
 		
@@ -225,7 +267,6 @@ public class Window extends JFrame {
 		upperRight.add(graph, d);
 		
 
-		
 		
 		this.packMe();
 		this.setVisible(true);
@@ -270,11 +311,9 @@ public class Window extends JFrame {
 			}
 		}
 	}
-
-	
 	
 	//to check if dataSeries is empty
-	public boolean DataSeriesEmpty() {
+	public boolean dataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();
 	}	
 }

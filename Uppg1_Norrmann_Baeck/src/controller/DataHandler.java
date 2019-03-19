@@ -1,7 +1,5 @@
 package controller;
 
-import model.JsonParser;
-
 public class DataHandler {
 
 
@@ -37,13 +35,15 @@ public class DataHandler {
 		
 		try {			
 			return JsonParser.parser(json, dataSeries);
-			} catch (Exception e) {
-				if(dataSeries == null) {
-					return "**** Now select a dataSeries ****";
-				} else {
-					return "**** No \""+ dataSeries + "\" found ****";			
-				}
+		} catch (Exception e) {
+			if(!main.Main.window.dataSeriesEmpty()) {
+				return "**** Now select a dataSeries ****";
+			} else if (dataSeries != null) {
+				return "**** No \""+ dataSeries + "\" found ****";			
+			} else {
+				return "**** No dataSeries found ****";
 			}
+		}
 	}
 		
 		

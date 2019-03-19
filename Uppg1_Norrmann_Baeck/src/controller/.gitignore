@@ -5,3 +5,5 @@
 /FileReader.class
 /WebDownloader.class
 /FileHandler.class
+/DateHandler.class
+/JsonParser.class

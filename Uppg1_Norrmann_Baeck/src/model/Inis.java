@@ -1,9 +1,7 @@
 package model;
 
 import java.util.Map;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class Inis {
 	private Map<String, String[]> ini;

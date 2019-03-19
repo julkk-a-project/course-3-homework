@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 
-import model.DataStorer;
-import view.Window;
-
 
 public class ActionListeners {
 	
