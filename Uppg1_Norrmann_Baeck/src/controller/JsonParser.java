@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class JsonParser {	
 	
-	//Parsing downloaded data. Stay in model package
+	//Parsing downloaded data. Stay in model package "magiska ordet" :(
 	public static String parser(String json, String dataSeries) {
 
 		boolean handleDate = DateHandler.needsHandling();
@@ -32,7 +32,7 @@ public class JsonParser {
 		
 		
 		//System.out.println(arrayOfKeys2.get(0)); //<-- this is a list of the dates.
-		if(/*handleDate == */true) {
+		if(handleDate == true) {
 			List<String> formatedDateList = new ArrayList<String>();
 			formatedDateList = arrayOfKeys2;
 			
@@ -66,6 +66,24 @@ public class JsonParser {
 			}*/
 
 
+		
+		
+		
+		
+		//READ DATASERIES IF YOU DON'T HAVE ANY YET
+		System.out.println("if you don't read this, something is wrong");
+		main.Main.window.DEBUG_READ_DATA_SERIES();
+		
+		if(main.Main.window.dataSeriesEmpty()) {
+			
+			String tempDataSeries = readDataSeries(obj2, it2);
+			if (dataSeries == null) {
+				dataSeries = tempDataSeries;
+			}
+		} 
+		
+		
+		
 		String log = "===== Showing data for " + dataSeries + " =====\n";
 		int i = -1;
 
@@ -87,7 +105,9 @@ public class JsonParser {
 
 			
 			
-			if(i == 0 && main.Main.window.dataSeriesEmpty()) {
+			/* flyttats ner till egen metod
+			 * if(i == 0 && main.Main.window.dataSeriesEmpty()) {
+			 
 				int moduloTest = 0;
 				String[] protoDataSeries = data.toString().split("\"");
 				//String[] DataSeriesArray;
@@ -112,7 +132,7 @@ public class JsonParser {
 						}
 					}
 				}	
-			}
+			}*/
 
 
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
@@ -178,5 +198,52 @@ public class JsonParser {
 		//Should return information about what was downloaded, not all content.
 		return log;		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//HelpMethHoods
+	
+	
+	
+	public static String readDataSeries(JSONObject obj2Clone, Iterator<String> it2Clone){ //Return dataseries[0]
+		
+		
 
-}
+		JSONObject data = obj2Clone.getJSONObject(it2Clone.next());	
+		if(true) { //TODO: ADD ARGuMEnts here LATER?
+			System.out.println("Boobies");
+			int moduloTest = 0;
+			String[] protoDataSeries = data.toString().split("\"");
+			//String[] DataSeriesArray;
+
+			for(int proto = 0; proto < protoDataSeries.length; proto++) {
+
+				//This system purges the unneccesary parts of protoDataSeries, so that we only get dataSeries's's :)
+				//we studied the patterns, and the split gives the following pattern of usable and unusable data:
+				// un == unusable, us == usable
+				//un, us, un, un, un, us, un, un, un, us... ... us, un, un, un.
+
+				//PS. i think we could have just used keySet() instead of this fancy if-tree :)))
+
+				if(proto != 0) {
+					if (proto != protoDataSeries.length-1 || proto != protoDataSeries.length-2 || proto != protoDataSeries.length-3) {
+
+						if(moduloTest % 4 == 0) {
+							//System.out.println("Succ"+protoDataSeries[proto]);
+							main.Main.window.setDataSeries(protoDataSeries[proto]);
+						}
+						moduloTest++;
+					}
+				}
+			}	
+		}
+		return main.Main.window.getDataSeries(0);
+	} //method
+
+} //class

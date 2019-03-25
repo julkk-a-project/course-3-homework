@@ -295,6 +295,13 @@ public class Window extends JFrame {
 	
 	
 	
+	//to get dataSeries for end-user satisfaction
+	public String getDataSeries(int i) {
+		return dataSeriesListString.get(i);
+	}
+	
+	
+	
 	//to update dataSeries
 	public void updateDataSeries() {
 		dataSeries.removeAllItems();
@@ -315,5 +322,17 @@ public class Window extends JFrame {
 	//to check if dataSeries is empty
 	public boolean dataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();
+	}
+
+	public void DEBUG_READ_DATA_SERIES() {
+
+
+		System.out.println("-----");
+		System.out.println(dataSeriesListString.isEmpty());
+		for (int i = dataSeriesListString.size()-1; i >= 0; i--) {
+			System.out.println(dataSeriesListString.get(i));
+		}
+		System.out.println("-----");
+		
 	}	
 }

@@ -37,7 +37,7 @@ public class DataHandler {
 			return JsonParser.parser(json, dataSeries);
 		} catch (Exception e) {
 			if(!main.Main.window.dataSeriesEmpty()) {
-				return "**** Now select a dataSeries ****";
+				return "**** Now you can select a dataSeries ****";
 			} else if (dataSeries != null) {
 				return "**** No \""+ dataSeries + "\" found ****";			
 			} else {
@@ -49,10 +49,14 @@ public class DataHandler {
 		
 	//2 controller package. reading data from dataSeries
 	public static String readData(String dataSeries) {
+		System.out.println(dataSeries);
 		try {
 			String json = controller.DataHandler.getData("old");
+			System.out.println("Tiddies");
 			return JsonParser.parser(json, dataSeries);
 		}catch(Exception e) {
+
+			System.out.println(e);
 			if(dataSeries == null) {
 				return "**** Please select a dataSeries again ****";
 			}else {
