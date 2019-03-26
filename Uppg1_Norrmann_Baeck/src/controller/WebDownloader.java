@@ -82,6 +82,7 @@ public class WebDownloader {
 				}
 				
 			} catch (IOException e) {
+				System.out.println("(In WebDownloader) " + e);
 				e.printStackTrace();
 				}
 			}

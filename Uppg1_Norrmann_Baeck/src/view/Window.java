@@ -22,25 +22,26 @@ public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private final JSplitPane splitPane;  	// split the window in right and left
-	private final JSplitPane leftSplitPane; // splits textArea from buttons
-    public final JPanel upperRight;      	// container panel for graph
-    private final JPanel upperLeft;    		// container panel for buttons
-    private final JPanel downLeft;			// container panel for textArea
+	private final JSplitPane splitPane;  		// split the window in right and left
+	private final JSplitPane leftSplitPane; 	// splits textArea from buttons
+    public final JPanel upperRight;      		// container panel for graph
+    private final JPanel upperLeft;    			// container panel for buttons
+    private final JPanel downLeft;				// container panel for textArea
     
-    public Graph graph;						// our graph
-    public JTextArea textArea;     			// the textArea
-    public JTextArea apiTextArea;    		// the textArea for API Key
-    public JTextArea startDateTextArea;    	// the textArea for startDate
+    public Graph graph;							// our graph
+    public JTextArea textArea;     				// the textArea
+    public JTextArea apiTextArea;    			// the textArea for API Key
+    public JTextArea startDateTextArea;    		// the textArea for startDate
     public JTextArea endDateTextArea;    		// the textArea for stopDate
-    public JButton doQueryButton;			// our DoQuery button ;) 
+    public JTextArea errorTextArea;    			// the textArea for stopDate
+    public JButton doQueryButton;				// our DoQuery button ;) 
     public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
     
     public JComboBox<String> dataSeries;		//dataSeries alternatives
 	public JComboBox<String> timeSeries;		//  ---||---
-	public JComboBox<String> symbol;
-	public JComboBox<String> timeInterval;
-	public JComboBox<String> outputSize;
+	public JComboBox<String> symbol;			//  ---||---
+	public JComboBox<String> timeInterval;		//  ---||---
+	public JComboBox<String> outputSize;		//  ---||---
     
     boolean hasData = false;
 
@@ -118,7 +119,13 @@ public class Window extends JFrame {
 		
 		
 		//---Do query--- button
-		doQueryButton = new JButton("--- Do query ---");		
+		doQueryButton = new JButton("--- Do query ---");
+		
+		
+		
+		//errorTextArea
+		errorTextArea = new JTextArea("Date (not) read", 1,25);
+		errorTextArea.setEditable(false);
 		
 		
 
@@ -159,13 +166,15 @@ public class Window extends JFrame {
 		c.gridy = 6;
 		upperLeft.add(new Label("Date interval"), c);
 		
-		
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 7;
+		//upperLeft.add(new Label("Date errors"), c);
 		
 		
 		
 		//position for our textAreas and dropDownBoxes
 		c.gridwidth = 3;
-		
 		c.gridx = 1;
 		c.gridy = 0;
 		upperLeft.add(apiTextArea, c);
@@ -190,7 +199,11 @@ public class Window extends JFrame {
 		c.gridy = 5;
 		upperLeft.add(outputSize, c);	
 
-
+		c.gridwidth = 2;
+		c.gridx = 2;
+		c.gridy = 7;
+		upperLeft.add(errorTextArea, c);
+		
 		c.gridwidth = 1;
 		c.gridx = 1;
 		c.gridy = 7;
@@ -215,7 +228,6 @@ public class Window extends JFrame {
 		e.gridx = 3;
 		e.gridy = 6;
 		upperLeft.add(endDateTextArea, e);
-		
 		
 		
 		
@@ -328,11 +340,10 @@ public class Window extends JFrame {
 
 
 		System.out.println("-----");
-		System.out.println(dataSeriesListString.isEmpty());
+		System.out.println("(In Window)" + dataSeriesListString.isEmpty());
 		for (int i = dataSeriesListString.size()-1; i >= 0; i--) {
-			System.out.println(dataSeriesListString.get(i));
+			System.out.println("In Window" + dataSeriesListString.get(i));
 		}
 		System.out.println("-----");
-		
 	}	
 }

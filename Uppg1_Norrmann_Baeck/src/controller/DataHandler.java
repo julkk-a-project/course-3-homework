@@ -49,19 +49,20 @@ public class DataHandler {
 		
 	//2 controller package. reading data from dataSeries
 	public static String readData(String dataSeries) {
-		System.out.println(dataSeries);
-		try {
+		System.out.println("(In DataHandler) dataSeries: " + dataSeries);
+		//try {
+			System.out.println("(In DataHandler)breasts");
 			String json = controller.DataHandler.getData("old");
-			System.out.println("Tiddies");
+			System.out.println("(In DataHandler) Tiddies");
 			return JsonParser.parser(json, dataSeries);
-		}catch(Exception e) {
+		/*}catch(Exception e) {
 
-			System.out.println(e);
+			System.out.println("(In DataHandler) " + e);
 			if(dataSeries == null) {
 				return "**** Please select a dataSeries again ****";
 			}else {
 				return "**** No \""+ dataSeries + "\" found ****";						
 			}
-		}
+		}*/
 	}
 }

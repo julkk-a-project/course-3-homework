@@ -31,26 +31,49 @@ public class JsonParser {
 		ArrayList<String> arrayOfKeys2 = new ArrayList<>(keys2);
 		
 		
+
+		
+		//READ DATASERIES IF YOU DON'T HAVE ANY YET
+		System.out.println("(In JsonParser) if you don't read this, something is wrong");
+		main.Main.window.DEBUG_READ_DATA_SERIES();
+		
+		if(main.Main.window.dataSeriesEmpty()) {
+			
+			String tempDataSeries = readDataSeries(obj2, it2);
+			if (dataSeries == null) {
+				dataSeries = tempDataSeries;
+			}
+		} 
+		
+		
+		
 		//System.out.println(arrayOfKeys2.get(0)); //<-- this is a list of the dates.
 		if(handleDate == true) {
+			System.out.println("(In JsonParser) --------------HandleDate--------------");
 			List<String> formatedDateList = new ArrayList<String>();
 			formatedDateList = arrayOfKeys2;
 			
+			//TODO: IndexOutOfBoundsException
 			//parse FDL
+			System.out.println("(In JsonParser) " + arrayOfKeys2.size());
 			for (int i = 0; i < arrayOfKeys2.size(); i++) {
-				System.out.println(formatedDateList.get(i));
+				System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + arrayOfKeys2.size() + " or so it should be");
+				System.out.println("(In JsonParser) FormatedDateList" + formatedDateList.get(i));
 				formatedDateList.set(i, formatedDateList.get(i).substring(0,10));
-				System.out.println(formatedDateList.get(i)); 
+				System.out.println("(In JsonParser) formatedDateList " + formatedDateList.get(i)); 
 			}
 			
 			
 			
-			
-			for(int i = 0; i < arrayOfKeys2.size(); i++) {
+			System.out.println("(In JsonParser) ArrayOfKeys2: " + arrayOfKeys2.size());
+			for(int i = -1; i < arrayOfKeys2.size();) {
+				i++;
+				System.out.println("(In JsonParser) index "+i+" under inspection. it says "+formatedDateList.get(i));
 				if(!DateHandler.inRange(formatedDateList.get(i))) {
 					//kill
 					arrayOfKeys2.remove(i);
-					System.out.println(i);
+					formatedDateList.remove(i);
+					System.out.println("(In JsonParser) index "+i+" Killed. it said "+formatedDateList.get(i));
 				}
 			}
 		}
@@ -67,20 +90,6 @@ public class JsonParser {
 
 
 		
-		
-		
-		
-		//READ DATASERIES IF YOU DON'T HAVE ANY YET
-		System.out.println("if you don't read this, something is wrong");
-		main.Main.window.DEBUG_READ_DATA_SERIES();
-		
-		if(main.Main.window.dataSeriesEmpty()) {
-			
-			String tempDataSeries = readDataSeries(obj2, it2);
-			if (dataSeries == null) {
-				dataSeries = tempDataSeries;
-			}
-		} 
 		
 		
 		
@@ -217,7 +226,7 @@ public class JsonParser {
 
 		JSONObject data = obj2Clone.getJSONObject(it2Clone.next());	
 		if(true) { //TODO: ADD ARGuMEnts here LATER?
-			System.out.println("Boobies");
+			System.out.println("(In JsonParser) Boobies");
 			int moduloTest = 0;
 			String[] protoDataSeries = data.toString().split("\"");
 			//String[] DataSeriesArray;

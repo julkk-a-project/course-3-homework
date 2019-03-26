@@ -44,7 +44,6 @@ public class Graph extends JPanel {
 	   //Generates default set
 	   double temp = 27;
 	   List<Double> tempList = new ArrayList<Double>();
-	   
 	   for(int i = 0; i < 27; i++) {
 		   tempList.add(temp);
 	   }

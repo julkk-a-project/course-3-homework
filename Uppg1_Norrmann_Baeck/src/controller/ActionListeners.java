@@ -24,6 +24,7 @@ public class ActionListeners {
 				try {
 					main.Main.window.graph.resetScore();
 				}catch(Exception e){
+					System.out.println("(In ActionListener) " + e);
 					System.out.println("No clear needed at first run");
 				}
 						
@@ -53,6 +54,7 @@ public class ActionListeners {
 					try {
 						main.Main.window.graph.resetScore();
 					}catch(Exception e){
+						System.out.println("(In ActionListener) " + e);
 						System.out.println("No clear needed at first run");
 					}
 							
