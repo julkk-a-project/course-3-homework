@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -50,14 +51,14 @@ public class JsonParser {
 		//System.out.println(arrayOfKeys2.get(0)); //<-- this is a list of the dates.
 		if(handleDate == true) {
 			System.out.println("(In JsonParser) --------------HandleDate--------------");
-			List<String> formatedDateList = new ArrayList<String>();
+			List<String> formatedDateList = new LinkedList<String>();
 			formatedDateList = arrayOfKeys2;
 			
 			//TODO: IndexOutOfBoundsException
 			//parse FDL
 			System.out.println("(In JsonParser) " + arrayOfKeys2.size());
 			for (int i = 0; i < arrayOfKeys2.size(); i++) {
-				System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + arrayOfKeys2.size() + " or so it should be");
+				System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + (arrayOfKeys2.size()-1) + " or so it should be");
 				System.out.println("(In JsonParser) FormatedDateList" + formatedDateList.get(i));
 				formatedDateList.set(i, formatedDateList.get(i).substring(0,10));
 				System.out.println("(In JsonParser) formatedDateList " + formatedDateList.get(i)); 
@@ -66,20 +67,23 @@ public class JsonParser {
 			
 			
 			System.out.println("(In JsonParser) ArrayOfKeys2: " + arrayOfKeys2.size());
-			for(int i = -1; i < arrayOfKeys2.size();) {
-				i++;
+			for(int i = 0; i < arrayOfKeys2.size();) {
 				System.out.println("(In JsonParser) index "+i+" under inspection. it says "+formatedDateList.get(i));
 				if(!DateHandler.inRange(formatedDateList.get(i))) {
 					//kill
+					System.out.println("(In JsonParser) index "+i+" Killed. it said "+formatedDateList.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					System.out.println(i+"/"+arrayOfKeys2.size());
+					System.out.println("(In JsonParser) index "+i+" Killed. it said "+arrayOfKeys2.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					arrayOfKeys2.remove(i);
 					formatedDateList.remove(i);
-					System.out.println("(In JsonParser) index "+i+" Killed. it said "+formatedDateList.get(i));
+				}else {
+					i++;
 				}
 			}
 		}
 		
-		
-		
+
+		System.out.println("/  -  -  -" + arrayOfKeys2.size());
 		
 		//Collections.sort(arrayOfKeys2);
 		/*for (int i = 0; i < arrayOfKeys2.size(); i++) {
@@ -105,45 +109,16 @@ public class JsonParser {
 		double max = 0;
 		double min = -1;
 
-		while(it2.hasNext()) {
+		while(it2.hasNext() && i < arrayOfKeys2.size()-1) {
 
 			i++;
 			JSONObject data = obj2.getJSONObject(it2.next());	
 
-			//getDataSeries's's
-
 			
+
+
+			//TODO: problem is here, i think.
 			
-			/* flyttats ner till egen metod
-			 * if(i == 0 && main.Main.window.dataSeriesEmpty()) {
-			 
-				int moduloTest = 0;
-				String[] protoDataSeries = data.toString().split("\"");
-				//String[] DataSeriesArray;
-
-				for(int proto = 0; proto < protoDataSeries.length; proto++) {
-
-					//This system purges the unneccesary parts of protoDataSeries, so that we only get dataSeries's's :)
-					//we studied the patterns, and the split gives the following pattern of usable and unusable data:
-					// un == unusable, us == usable
-					//un, us, un, un, un, us, un, un, un, us... ... us, un, un, un.
-
-					//PS. i think we could have just used keySet() instead of this fancy if-tree :)))
-
-					if(proto != 0) {
-						if (proto != protoDataSeries.length-1 || proto != protoDataSeries.length-2 || proto != protoDataSeries.length-3) {
-
-							if(moduloTest % 4 == 0) {
-								//System.out.println("Succ"+protoDataSeries[proto]);
-								main.Main.window.setDataSeries(protoDataSeries[proto]);
-							}
-							moduloTest++;
-						}
-					}
-				}	
-			}*/
-
-
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
 			if(datapoint > max) {
 				max = datapoint;
@@ -156,6 +131,7 @@ public class JsonParser {
 			
 			//SORTS EVERYTHING ACCODRING TO DATE
 			datapointSorter.add(datapoint);
+			System.out.println("arrayofkeys get i: "+ 1);
 			dateSorter.add(arrayOfKeys2.get(i));
 			int x, y; 
 			String key;
