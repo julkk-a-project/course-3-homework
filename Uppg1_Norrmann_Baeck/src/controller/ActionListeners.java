@@ -16,6 +16,7 @@ public class ActionListeners {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Button pressed");
 				
 				//to Listen for new API Key
 				String[] apiKeyArray = { main.Main.window.apiTextArea.getText() };
@@ -30,7 +31,7 @@ public class ActionListeners {
 						
 				main.Main.window.textArea.append((controller.DataHandler.readWeb((String) main.Main.window.dataSeries.getSelectedItem(), 
 																				 (String) main.Main.window.timeSeries.getSelectedItem(),
-																				 (String) main.Main.window.symbol.getSelectedItem(), 
+																				 (String) main.Main.window.symbol1.getSelectedItem(), 
 																				 (String) main.Main.window.timeInterval.getSelectedItem(),
 																				 (String) main.Main.window.outputSize.getSelectedItem()))+"\n");
 				
@@ -45,11 +46,13 @@ public class ActionListeners {
 				
 				
 		//actionListener for dataSeries
-		main.Main.window.dataSeries.addActionListener(new ActionListener(){			
-					
+		main.Main.window.dataSeries.addActionListener(new ActionListener(){	
+
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//System.out.println((String) main.Main.window.dataSeries.getSelectedItem());
+				System.out.println("(In ActionListener) mam");
+				System.out.println((String) main.Main.window.dataSeries.getSelectedItem());
 				if(main.Main.dataStorer.hasData()) {
 					try {
 						main.Main.window.graph.resetScore();

@@ -42,9 +42,12 @@ public class JsonParser {
 			
 			String tempDataSeries = readDataSeries(obj2, it2);
 			if (dataSeries == null) {
+				System.out.println("(In JsonParser) tempDataSeries thing happens");
 				dataSeries = tempDataSeries;
 			}
-		} 
+		} else {
+			
+		}
 		
 		
 		
@@ -58,24 +61,24 @@ public class JsonParser {
 			//parse FDL
 			System.out.println("(In JsonParser) " + arrayOfKeys2.size());
 			for (int i = 0; i < arrayOfKeys2.size(); i++) {
-				System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + (arrayOfKeys2.size()-1) + " or so it should be");
-				System.out.println("(In JsonParser) FormatedDateList" + formatedDateList.get(i));
+				//System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + (arrayOfKeys2.size()-1) + " or so it should be");
+				//System.out.println("(In JsonParser) FormatedDateList" + formatedDateList.get(i));
 				formatedDateList.set(i, formatedDateList.get(i).substring(0,10));
-				System.out.println("(In JsonParser) formatedDateList " + formatedDateList.get(i)); 
+				//System.out.println("(In JsonParser) formatedDateList " + formatedDateList.get(i)); 
 			}
 			
 			
 			
 			System.out.println("(In JsonParser) ArrayOfKeys2: " + arrayOfKeys2.size());
 			for(int i = 0; i < arrayOfKeys2.size();) {
-				System.out.println("(In JsonParser) index "+i+" under inspection. it says "+formatedDateList.get(i));
+				//System.out.println("(In JsonParser) index "+i+" under inspection. it says "+formatedDateList.get(i));
 				if(!DateHandler.inRange(formatedDateList.get(i))) {
 					//kill
-					System.out.println("(In JsonParser) index "+i+" Killed. it said "+formatedDateList.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					System.out.println(i+"/"+arrayOfKeys2.size());
-					System.out.println("(In JsonParser) index "+i+" Killed. it said "+arrayOfKeys2.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//System.out.println("(In JsonParser) index "+i+" Killed. it said "+formatedDateList.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//System.out.println(i+"/"+(arrayOfKeys2.size()-1));
+					//System.out.println("(In JsonParser) index "+i+" Killed. it said "+arrayOfKeys2.get(i) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					arrayOfKeys2.remove(i);
-					formatedDateList.remove(i);
+					//formatedDateList.remove(i);
 				}else {
 					i++;
 				}
@@ -120,6 +123,7 @@ public class JsonParser {
 			//TODO: problem is here, i think.
 			
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
+			System.out.println("(JSONPARSER) dataPoint" + datapoint);
 			if(datapoint > max) {
 				max = datapoint;
 			}
@@ -167,8 +171,18 @@ public class JsonParser {
 
 		
 		//Get first and last date from ArrayList dateSorter
-		main.Main.window.graph.setFirstX(dateSorter.get(0)); 
-		main.Main.window.graph.setLastX(dateSorter.get(dateSorter.size() -1));
+		try {
+			main.Main.window.graph.setFirstX(dateSorter.get(0)); 
+		} catch (IndexOutOfBoundsException e) {
+			main.Main.window.textArea.append("No first date\n");
+		}
+		try {
+			main.Main.window.graph.setLastX(dateSorter.get(dateSorter.size() -1));
+		} catch (IndexOutOfBoundsException e) {
+			main.Main.window.textArea.append("No last date\n");
+		}
+		
+		
 
 		
 

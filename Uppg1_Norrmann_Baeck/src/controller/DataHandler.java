@@ -50,12 +50,12 @@ public class DataHandler {
 	//2 controller package. reading data from dataSeries
 	public static String readData(String dataSeries) {
 		System.out.println("(In DataHandler) dataSeries: " + dataSeries);
-		//try {
+		try {
 			System.out.println("(In DataHandler)breasts");
 			String json = controller.DataHandler.getData("old");
 			System.out.println("(In DataHandler) Tiddies");
 			return JsonParser.parser(json, dataSeries);
-		/*}catch(Exception e) {
+		}catch(Exception e) {
 
 			System.out.println("(In DataHandler) " + e);
 			if(dataSeries == null) {
@@ -63,6 +63,6 @@ public class DataHandler {
 			}else {
 				return "**** No \""+ dataSeries + "\" found ****";						
 			}
-		}*/
+		}
 	}
 }

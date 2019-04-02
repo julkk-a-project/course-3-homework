@@ -7,6 +7,7 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,7 +40,8 @@ public class Window extends JFrame {
     
     public JComboBox<String> dataSeries;		//dataSeries alternatives
 	public JComboBox<String> timeSeries;		//  ---||---
-	public JComboBox<String> symbol;			//  ---||---
+	public JComboBox<String> symbol1;			//  ---||---
+	public JComboBox<String> symbol2;			//  ---||---
 	public JComboBox<String> timeInterval;		//  ---||---
 	public JComboBox<String> outputSize;		//  ---||---
     
@@ -102,7 +104,18 @@ public class Window extends JFrame {
 		
 		//4 "static" comboBoxes:
 		timeSeries = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_SERIES"));
-		symbol = new JComboBox<String>(main.Main.inis.getKeyValue("SYMBOL"));
+		symbol1 = new JComboBox<String>(main.Main.inis.getKeyValue("SYMBOL"));
+		
+		String[] temp = main.Main.inis.getKeyValue("SYMBOL");
+		String[] sym2list = new String[temp.length+1];
+		sym2list[0] = "";
+		for (int i = 1; i < temp.length; i++) {
+			sym2list[i] = main.Main.inis.getKeyValueInt(i, "SYMBOL");	
+		}
+		symbol2 = new JComboBox<String>(sym2list);
+		
+		
+				
 		timeInterval = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_INTERVAL"));
 		outputSize = new JComboBox<String>(main.Main.inis.getKeyValue("OUTPUT_SIZE"));
 		
@@ -151,24 +164,28 @@ public class Window extends JFrame {
 		
 		c.gridx = 0;
 		c.gridy = 3;
-		upperLeft.add(new Label("Symbol"), c);
-
+		upperLeft.add(new Label("Symbol 1"), c);
+		
 		c.gridx = 0;
 		c.gridy = 4;
+		upperLeft.add(new Label("Symbol 2"), c);
+
+		c.gridx = 0;
+		c.gridy = 5;
 		upperLeft.add(new Label("Time Interval"), c);
 		
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 6;
 		upperLeft.add(new Label("Output Size"), c);
 		
 		
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 7;
 		upperLeft.add(new Label("Date interval"), c);
 		
 		c.gridwidth = 1;
 		c.gridx = 0;
-		c.gridy = 7;
+		c.gridy = 8;
 		//upperLeft.add(new Label("Date errors"), c);
 		
 		
@@ -189,24 +206,28 @@ public class Window extends JFrame {
 		
 		c.gridx = 1;
 		c.gridy = 3;
-		upperLeft.add(symbol, c);
+		upperLeft.add(symbol1, c);
 		
 		c.gridx = 1;
 		c.gridy = 4;
-		upperLeft.add(timeInterval, c);
+		upperLeft.add(symbol2, c);
 		
 		c.gridx = 1;
 		c.gridy = 5;
+		upperLeft.add(timeInterval, c);
+		
+		c.gridx = 1;
+		c.gridy = 6;
 		upperLeft.add(outputSize, c);	
 
 		c.gridwidth = 2;
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 8;
 		upperLeft.add(errorTextArea, c);
 		
 		c.gridwidth = 1;
 		c.gridx = 1;
-		c.gridy = 7;
+		c.gridy = 8;
 		upperLeft.add(doQueryButton, c);
 		
 		
@@ -218,15 +239,15 @@ public class Window extends JFrame {
 		e.fill = GridBagConstraints.NORTH;
 
 		e.gridx = 1;
-		e.gridy = 6;
+		e.gridy = 7;
 		upperLeft.add(startDateTextArea, e);
 		
 		e.gridx = 2;
-		e.gridy = 6;
+		e.gridy = 7;
 		upperLeft.add(new Label("-"), e);
 		
 		e.gridx = 3;
-		e.gridy = 6;
+		e.gridy = 7;
 		upperLeft.add(endDateTextArea, e);
 		
 		

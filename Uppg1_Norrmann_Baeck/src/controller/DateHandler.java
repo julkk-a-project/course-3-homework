@@ -81,10 +81,10 @@ public class DateHandler {
 		//format: 2019-12-31
 		
 		String[] beforeArray = before.split("-");
-		System.out.println("(In DateHandler) BeforeArray: " + Arrays.toString(beforeArray));
+		//System.out.println("(In DateHandler) BeforeArray: " + Arrays.toString(beforeArray));
 		
 		String[] afterArray = after.split("-");
-		System.out.println("(In DateHandler) AfterArray: " + Arrays.toString(afterArray));
+		//System.out.println("(In DateHandler) AfterArray: " + Arrays.toString(afterArray));
 		
 		int[] b4 = new int[3];
 		int[] aft = new int[3];
@@ -95,20 +95,20 @@ public class DateHandler {
 			aft[i] = Integer.parseInt(afterArray[i]);
 		}
 
-		System.out.println("(In DateHandler) B4: " + Arrays.toString(b4));
-		System.out.println("(In DateHandler) Aft: " + Arrays.toString(aft));
+		//System.out.println("(In DateHandler) B4: " + Arrays.toString(b4));
+		//System.out.println("(In DateHandler) Aft: " + Arrays.toString(aft));
 		
 		//compares two dates. first the year, then the month, then day.
 		
 		if(b4[0] <= aft[0]) {
 			if(b4[0] < aft[0] || b4[1] <= aft[1]) {
 				if(b4[0] < aft[0] || b4[1] < aft[1] || b4[2] <= aft[2]) {
-					System.out.println("(In DateHandler) Returns false");
+					//System.out.println("(In DateHandler) Returns false");
 					return false;
 				}
 			}
 		}
-		System.out.println("(In DateHandler) Returns true");
+		//System.out.println("(In DateHandler) Returns true");
 		return true;
 	}
 	
@@ -142,7 +142,7 @@ public class DateHandler {
 	
 	
 	public static boolean inRange(String date) {
-		System.out.println("(In DateHandler) inRange");
+		//System.out.println("(In DateHandler) inRange");
 		boolean after = isAfter(date, getStartDate());
 		boolean before = isAfter(getEndDate(), date);
 		return before && after;
