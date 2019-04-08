@@ -36,7 +36,10 @@ public class Window extends JFrame {
     public JTextArea startDateTextArea;    		// the textArea for startDate
     public JTextArea endDateTextArea;    		// the textArea for stopDate
     public JTextArea errorTextArea;    			// the textArea for stopDate
-    public JButton doQueryButton;				// our DoQuery button ;) 
+    public JTextArea pearsonTextArea;			// the textArea for Pearson correlation
+    
+    public JButton doQueryButton;				// our DoQuery button ;)
+    public JButton pearsonButton;				// the pearson correlation button
     public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
     
     public JComboBox<String> dataSeries;		//dataSeries alternatives
@@ -47,6 +50,12 @@ public class Window extends JFrame {
 	public JComboBox<String> outputSize;		//  ---||---
     
     boolean hasData = false;
+
+
+	
+
+
+	
 
 
 	
@@ -104,9 +113,10 @@ public class Window extends JFrame {
 		dataSeries = new JComboBox<String>();	
 		
 		//4 "static" comboBoxes:
+			//timeSeries
 		timeSeries = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_SERIES"));
 		
-		
+			//symbol
 		String[] temp = main.Main.inis.getKeyValue("SYMBOL");
 		String[] symlist = new String[temp.length+1];
 		symlist[0] = "";
@@ -117,8 +127,9 @@ public class Window extends JFrame {
 		symbol2 = new JComboBox<String>(symlist);
 		
 		
-				
+			//timeInterval	
 		timeInterval = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_INTERVAL"));
+			//outputSize
 		outputSize = new JComboBox<String>(main.Main.inis.getKeyValue("OUTPUT_SIZE"));
 		
 		
@@ -132,9 +143,16 @@ public class Window extends JFrame {
 		endDateTextArea.setEditable(true);
 				
 		
-		
+
 		//---Do query--- button
 		doQueryButton = new JButton("--- Do query ---");
+		
+		//Pearson Correlation button
+		pearsonButton = new JButton("Pearson Correlation");
+		
+		//pearson text area
+		pearsonTextArea = new JTextArea (1,25);
+		pearsonTextArea.setEditable(true);
 		
 		
 		
@@ -194,6 +212,11 @@ public class Window extends JFrame {
 		c.gridy = 8;
 		//upperLeft.add(new Label("Date errors"), c);
 		
+		c.gridwidth = 0;
+		c.gridx = 0;
+		c.gridy = 9;
+		upperLeft.add(pearsonButton, c);
+		
 		
 		
 		//position for our textAreas and dropDownBoxes
@@ -235,6 +258,11 @@ public class Window extends JFrame {
 		c.gridx = 1;
 		c.gridy = 8;
 		upperLeft.add(doQueryButton, c);
+		
+		c.gridwidth = 2;
+		c.gridx = 1;
+		c.gridy = 9;
+		upperLeft.add(pearsonTextArea, c);
 		
 		
 		
