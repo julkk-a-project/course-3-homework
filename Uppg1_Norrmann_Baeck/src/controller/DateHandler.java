@@ -1,10 +1,13 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DateHandler {
 	
-	
+	static List<String> dateList1 = new ArrayList<String>();
+	static List<String> dateList2 = new ArrayList<String>();
 	
 	public static boolean needsHandling() {
 		
@@ -154,6 +157,14 @@ public class DateHandler {
 
 	private static String getStartDate() {
 		return main.Main.window.startDateTextArea.getText();
+	}
+	
+	public static void setDateList(boolean isSymbol2, List list) {
+		if(isSymbol2) {
+			dateList2 = list;
+		} else {
+			dateList1 = list;
+		}
 	}
 
 }

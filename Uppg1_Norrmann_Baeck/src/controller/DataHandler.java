@@ -7,34 +7,34 @@ public class DataHandler {
 	//private static String oldUrl = "";
 	
 	
-	public static String getData(String url) {
+	public static String getData(Boolean isSymbol2, String url) {
 		
 		//So we can look at all dataSeries without downloading more than once.
-		if (url.equals(main.Main.dataStorer.getOldUrl()) || url.equals("old")) {
+		if (url.equals(main.Main.dataStorer.getOldUrl(isSymbol2)) || url.equals("old")) {
 			main.Main.window.textArea.append("**** No Download Needed ****\n");
-			return main.Main.dataStorer.getData();
+			return main.Main.dataStorer.getData(isSymbol2);
 		} else {
-			main.Main.dataStorer.setOldUrl(url);
+			main.Main.dataStorer.setOldUrl(isSymbol2, url);
 			main.Main.window.textArea.append("**** Downloading ****\n");
 			
-			main.Main.dataStorer.setData(WebDownloader.testIt(url));
+			main.Main.dataStorer.setData(isSymbol2, WebDownloader.testIt(url));
 			main.Main.window.textArea.append("**** Downloaded ****\n");
-			return main.Main.dataStorer.getData();
+			return main.Main.dataStorer.getData(isSymbol2);
 		}	
 	}
 	
 	//to controller package
-	public static String readWeb(String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
+	public static String readWeb(Boolean isSymbol2, String dataSeries, String timeSeries, String symbol, String timeInterval, String outputSize) {
 				
 		//takes in information from webSite
-		String json = controller.DataHandler.getData("https://www.alphavantage.co/query?function="+timeSeries
+		String json = controller.DataHandler.getData(isSymbol2, "https://www.alphavantage.co/query?function="+timeSeries
 														+"&symbol="+symbol+"&interval="+timeInterval
 														+"&outputsize="+outputSize+"&apikey="
 														+main.Main.inis.getKeyValueInt(0, "API_KEY"));
 		
 		
 		try {			
-			return JsonParser.parser(json, dataSeries);
+			return JsonParser.parser(isSymbol2, json, dataSeries);
 		} catch (Exception e) {
 			if(!main.Main.window.dataSeriesEmpty()) {
 				return "**** Now you can select a dataSeries ****";
@@ -48,13 +48,13 @@ public class DataHandler {
 		
 		
 	//2 controller package. reading data from dataSeries
-	public static String readData(String dataSeries) {
+	public static String readData(Boolean isSymbol2, String dataSeries) {
 		System.out.println("(In DataHandler) dataSeries: " + dataSeries);
 		try {
-			System.out.println("(In DataHandler)breasts");
-			String json = controller.DataHandler.getData("old");
+			System.out.println("(In DataHandler) Breasts");
+			String json = controller.DataHandler.getData(isSymbol2, "old");
 			System.out.println("(In DataHandler) Tiddies");
-			return JsonParser.parser(json, dataSeries);
+			return JsonParser.parser(isSymbol2, json, dataSeries);
 		}catch(Exception e) {
 
 			System.out.println("(In DataHandler) " + e);

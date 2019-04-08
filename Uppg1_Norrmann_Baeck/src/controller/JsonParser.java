@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class JsonParser {	
 	
 	//Parsing downloaded data. Stay in model package "magiska ordet" :(
-	public static String parser(String json, String dataSeries) {
+	public static String parser(Boolean isSymbol2, String json, String dataSeries) {
 
 		boolean handleDate = DateHandler.needsHandling();
 		
@@ -35,14 +35,14 @@ public class JsonParser {
 
 		
 		//READ DATASERIES IF YOU DON'T HAVE ANY YET
-		System.out.println("(In JsonParser) if you don't read this, something is wrong");
+		//sSystem.out.println("(In JsonParser) if you don't read this, something is wrong");
 		main.Main.window.DEBUG_READ_DATA_SERIES();
 		
 		if(main.Main.window.dataSeriesEmpty()) {
 			
 			String tempDataSeries = readDataSeries(obj2, it2);
 			if (dataSeries == null) {
-				System.out.println("(In JsonParser) tempDataSeries thing happens");
+				//System.out.println("(In JsonParser) tempDataSeries thing happens");
 				dataSeries = tempDataSeries;
 			}
 		} else {
@@ -53,13 +53,13 @@ public class JsonParser {
 		
 		//System.out.println(arrayOfKeys2.get(0)); //<-- this is a list of the dates.
 		if(handleDate == true) {
-			System.out.println("(In JsonParser) --------------HandleDate--------------");
+			//System.out.println("(In JsonParser) --------------HandleDate--------------");
 			List<String> formatedDateList = new LinkedList<String>();
 			formatedDateList = arrayOfKeys2;
 			
 			//TODO: IndexOutOfBoundsException
 			//parse FDL
-			System.out.println("(In JsonParser) " + arrayOfKeys2.size());
+			//System.out.println("(In JsonParser) " + arrayOfKeys2.size());
 			for (int i = 0; i < arrayOfKeys2.size(); i++) {
 				//System.out.println("(In JsonParser) for parse FDL index "+ i + "/" + (arrayOfKeys2.size()-1) + " or so it should be");
 				//System.out.println("(In JsonParser) FormatedDateList" + formatedDateList.get(i));
@@ -119,8 +119,6 @@ public class JsonParser {
 
 			
 
-
-			//TODO: problem is here, i think.
 			
 			Double datapoint = Double.parseDouble(data.getString(dataSeries));
 			System.out.println("(JSONPARSER) dataPoint" + datapoint);
@@ -192,7 +190,7 @@ public class JsonParser {
 		
 
 		//Draws datapoints to graph
-		main.Main.window.graph.setScore(datapoints);
+		main.Main.window.graph.setScore(isSymbol2, datapoints);
 		//Window.upperRight.revalidate();
 		//Should return information about what was downloaded, not all content.
 		return log;		
@@ -223,7 +221,7 @@ public class JsonParser {
 
 			for(int proto = 0; proto < protoDataSeries.length; proto++) {
 
-				//This system purges the unneccesary parts of protoDataSeries, so that we only get dataSeries's's :)
+				//This system purges the unnecessary parts of protoDataSeries, so that we only get dataSeries's's :)
 				//we studied the patterns, and the split gives the following pattern of usable and unusable data:
 				// un == unusable, us == usable
 				//un, us, un, un, un, us, un, un, un, us... ... us, un, un, un.

@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -104,15 +105,16 @@ public class Window extends JFrame {
 		
 		//4 "static" comboBoxes:
 		timeSeries = new JComboBox<String>(main.Main.inis.getKeyValue("TIME_SERIES"));
-		symbol1 = new JComboBox<String>(main.Main.inis.getKeyValue("SYMBOL"));
+		
 		
 		String[] temp = main.Main.inis.getKeyValue("SYMBOL");
-		String[] sym2list = new String[temp.length+1];
-		sym2list[0] = "";
+		String[] symlist = new String[temp.length+1];
+		symlist[0] = "";
 		for (int i = 1; i < temp.length; i++) {
-			sym2list[i] = main.Main.inis.getKeyValueInt(i, "SYMBOL");	
+			symlist[i] = main.Main.inis.getKeyValueInt(i, "SYMBOL");	
 		}
-		symbol2 = new JComboBox<String>(sym2list);
+		symbol1 = new JComboBox<String>(symlist);
+		symbol2 = new JComboBox<String>(symlist);
 		
 		
 				
@@ -164,10 +166,14 @@ public class Window extends JFrame {
 		
 		c.gridx = 0;
 		c.gridy = 3;
+		symbol1.setForeground(view.Graph.getStrokeColor1());
+		symbol1.setBackground(view.Graph.getOvalColor1());
 		upperLeft.add(new Label("Symbol 1"), c);
 		
 		c.gridx = 0;
 		c.gridy = 4;
+		symbol2.setForeground(view.Graph.getStrokeColor2());
+		symbol2.setBackground(view.Graph.getOvalColor2());
 		upperLeft.add(new Label("Symbol 2"), c);
 
 		c.gridx = 0;
