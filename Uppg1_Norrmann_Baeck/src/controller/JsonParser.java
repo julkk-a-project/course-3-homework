@@ -188,6 +188,9 @@ public class JsonParser {
 		main.Main.window.graph.setMaxScore(max);
 
 		
+		//adds Data to pearsonHandler
+		main.Main.dataStorer.addPearson(isSymbol2, datapoints);
+		
 
 		//Draws datapoints to graph
 		main.Main.window.graph.setScore(isSymbol2, datapoints);

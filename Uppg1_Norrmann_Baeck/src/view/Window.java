@@ -135,11 +135,11 @@ public class Window extends JFrame {
 		
 		
 		//startDate TextArea
-		startDateTextArea = new JTextArea ("Enter date here...", 1,10);
+		startDateTextArea = new JTextArea ("Enter date here", 1,10);
 		startDateTextArea.setEditable(true);
 			
 		//stopDate TextArea
-		endDateTextArea = new JTextArea ("...and here", 1,10);
+		endDateTextArea = new JTextArea ("and here", 1,10);
 		endDateTextArea.setEditable(true);
 				
 		
@@ -147,17 +147,16 @@ public class Window extends JFrame {
 		//---Do query--- button
 		doQueryButton = new JButton("--- Do query ---");
 		
-		//Pearson Correlation button
-		pearsonButton = new JButton("Pearson Correlation");
+		
 		
 		//pearson text area
-		pearsonTextArea = new JTextArea (1,25);
+		pearsonTextArea = new JTextArea ("Pearson Correlation", 1,15);
 		pearsonTextArea.setEditable(true);
 		
 		
 		
 		//errorTextArea
-		errorTextArea = new JTextArea("Date (not) read", 1,25);
+		errorTextArea = new JTextArea("Date (not) read", 1,15);
 		errorTextArea.setEditable(false);
 		
 		
@@ -212,10 +211,9 @@ public class Window extends JFrame {
 		c.gridy = 8;
 		//upperLeft.add(new Label("Date errors"), c);
 		
-		c.gridwidth = 0;
 		c.gridx = 0;
 		c.gridy = 9;
-		upperLeft.add(pearsonButton, c);
+		upperLeft.add(new Label("Pearson"), c);
 		
 		
 		

@@ -44,6 +44,9 @@ public class ActionListeners {
 																												(String) main.Main.window.outputSize.getSelectedItem()))+"\n");
 				
 				
+				
+				PearsonHandler.pearsonCalculator();
+				
 				//handles dataSeries data
 				Collections.sort(main.Main.window.dataSeriesListString);
 				main.Main.window.updateDataSeries();

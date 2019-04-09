@@ -27,8 +27,8 @@ public class Graph extends JPanel {
 	private static Color GRAPH_POINT_COLOR = new Color(0, 0, 250, 180);
 	private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-	private static final Color GRAPH_COLOR_2 = Color.red;
-	private static Color GRAPH_POINT_COLOR_2 = new Color(125, 0, 0, 180);
+	private static final Color GRAPH_COLOR_2 = Color.yellow;
+	private static Color GRAPH_POINT_COLOR_2 = new Color(250, 0, 0, 180);
 	private static final Stroke GRAPH_STROKE_2 = new BasicStroke(2f);
 
 

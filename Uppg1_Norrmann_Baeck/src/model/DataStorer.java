@@ -1,10 +1,14 @@
 package model;
 
+import java.util.List;
+
 public class DataStorer {
 	private String data1 = "";
 	private String data2 = "";
 	private String oldUrl1 = "";
 	private String oldUrl2 = "";
+	private List<Double> symbol1Datapoints;
+	private List<Double> symbol2Datapoints;
 	
 	public boolean hasData(Boolean isSymbol2) {
 		String tempData = "";
@@ -52,5 +56,24 @@ public class DataStorer {
 		}else {
 			oldUrl1 = url;
 		}
+	}
+	public List<Double> getSymbol1Datapoints() {
+		return symbol1Datapoints;
+	}
+	public List<Double> getSymbol2Datapoints() {
+		return symbol2Datapoints;
+	}
+	
+	public void addPearson(boolean isSymbol2, List<Double> list) {
+		if(isSymbol2) {
+			symbol2Datapoints = list;
+		} else {
+			symbol1Datapoints = list;
+		}
+	}
+	
+	public void reset() {
+		symbol1Datapoints.clear();
+		symbol2Datapoints.clear();
 	}
 }
