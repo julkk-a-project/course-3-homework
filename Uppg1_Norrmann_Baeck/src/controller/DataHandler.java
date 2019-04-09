@@ -49,15 +49,13 @@ public class DataHandler {
 		
 	//2 controller package. reading data from dataSeries
 	public static String readData(Boolean isSymbol2, String dataSeries) {
-		System.out.println("(In DataHandler) dataSeries: " + dataSeries);
+		//System.out.println("(In DataHandler) dataSeries: " + dataSeries);
 		try {
-			System.out.println("(In DataHandler) Breasts");
 			String json = controller.DataHandler.getData(isSymbol2, "old");
-			System.out.println("(In DataHandler) Tiddies");
 			return JsonParser.parser(isSymbol2, json, dataSeries);
 		}catch(Exception e) {
 
-			System.out.println("(In DataHandler) " + e);
+			//System.out.println("(In DataHandler) " + e);
 			if(dataSeries == null) {
 				return "**** Please select a dataSeries again ****";
 			}else {

@@ -10,20 +10,16 @@ public class PearsonHandler {
 		List<Double> list1 = main.Main.dataStorer.getSymbol1Datapoints();
 		List<Double> list2 = main.Main.dataStorer.getSymbol2Datapoints();
 
-		System.out.println("1: "+list1);
-		System.out.println("2: "+list2);
-
+		
 		if(list2.size() > list1.size()) {
 			List<Double> temp = list1;
 			list1 = list2;
 			list2 = temp;	
 		}
 
-		System.out.println("1: "+list1.size());
-		System.out.println("2: "+list2.size());
 		
 		int sizeDifference = (list1.size()) - (list2.size());
-		list1.subList(sizeDifference, (list1.size() - 1)); //TODO: Check if sizeDifference - 1 is needed or if it should be only sizeDifference
+		list1.subList(sizeDifference, (list1.size() - 1));
 
 		Double[] list1Array = (Double[]) list1.toArray(new Double[list1.size()]);
 		Double[] list2Array = (Double[]) list2.toArray(new Double[list2.size()]);

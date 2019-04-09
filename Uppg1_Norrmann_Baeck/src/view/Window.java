@@ -7,12 +7,10 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -51,20 +49,12 @@ public class Window extends JFrame {
     
     boolean hasData = false;
 
-
-	
-
-
-	
-
-
 	
     //constructor
 	public Window(){
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
-		
 		
 		
 		//to split window
@@ -74,7 +64,6 @@ public class Window extends JFrame {
 		/*downRight = new JPanel(new GridBagLayout());
 		splitPane.add(downRight);*/
 		downLeft = new JPanel();
-
 		
 		
 		this.setLayout(new GridLayout());
@@ -392,11 +381,11 @@ public class Window extends JFrame {
 	public void DEBUG_READ_DATA_SERIES() {
 
 
-		System.out.println("-----");
-		System.out.println("(In Window)" + dataSeriesListString.isEmpty());
+		//System.out.println("-----");
+		//System.out.println("(In Window)" + dataSeriesListString.isEmpty());
 		for (int i = dataSeriesListString.size()-1; i >= 0; i--) {
 			System.out.println("In Window" + dataSeriesListString.get(i));
 		}
-		System.out.println("-----");
+		//System.out.println("-----");
 	}	
 }

@@ -16,7 +16,7 @@ public class ActionListeners {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Button pressed");
+				//System.out.println("Button pressed");
 				
 				//to Listen for new API Key
 				String[] apiKeyArray = { main.Main.window.apiTextArea.getText() };
@@ -62,8 +62,6 @@ public class ActionListeners {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("(In ActionListener) mam");
-				System.out.println((String) main.Main.window.dataSeries.getSelectedItem());
 				if(main.Main.dataStorer.hasData(false) || main.Main.dataStorer.hasData(true)) { //cheks if there is any data to read in ether datastorage system :)
 					try {
 						main.Main.window.graph.resetScore();
@@ -81,7 +79,5 @@ public class ActionListeners {
 			}		
 		});
 		
-	
-			
 	}
 }
