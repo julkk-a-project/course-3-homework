@@ -16,19 +16,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
-public class Window extends JFrame {
-	
-	 
+public class Window extends JFrame { 
 	private static final long serialVersionUID = 1L;
-	
 	
 	private final JSplitPane splitPane;  		// split the window in right and left
 	private final JSplitPane leftSplitPane; 	// splits textArea from buttons
-    public final JPanel upperRight;      		// container panel for graph
+   
+	public final JPanel upperRight;      		// container panel for graph
     private final JPanel upperLeft;    			// container panel for buttons
     private final JPanel downLeft;				// container panel for textArea
     
     public Graph graph;							// our graph
+    
     public JTextArea textArea;     				// the textArea
     public JTextArea apiTextArea;    			// the textArea for API Key
     public JTextArea startDateTextArea;    		// the textArea for startDate
@@ -38,6 +37,7 @@ public class Window extends JFrame {
     
     public JButton doQueryButton;				// our DoQuery button ;)
     public JButton pearsonButton;				// the pearson correlation button
+    
     public List<String> dataSeriesListString;	//ListArray used as temp storage for dataSeries
     
     public JComboBox<String> dataSeries;		//dataSeries alternatives
@@ -50,12 +50,12 @@ public class Window extends JFrame {
     boolean hasData = false;
 
 	
+    
     //constructor
 	public Window(){
 		
 		splitPane = new JSplitPane();
 		leftSplitPane = new JSplitPane();
-		
 		
 		//to split window
 		upperLeft = new JPanel(new GridBagLayout());
@@ -65,12 +65,9 @@ public class Window extends JFrame {
 		splitPane.add(downRight);*/
 		downLeft = new JPanel();
 		
-		
 		this.setLayout(new GridLayout());
 		this.add(splitPane);
 		
-	
-
 		leftSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);  // we want it to split the window horizontally
 		leftSplitPane.setDividerLocation(300);                    // the initial position of the divider is 400 (our window is 800 pixels high)
 		leftSplitPane.setTopComponent(upperLeft);                 // at the top we want our "topPanel"
@@ -88,13 +85,10 @@ public class Window extends JFrame {
 		
 		this.setLocationRelativeTo(null);
 		
-		
-		
 		//apiTextArea
 		apiTextArea = new JTextArea (main.Main.inis.getKeyValueInt(0,"API_KEY"), 1,25);
 		apiTextArea.setEditable(true);
 				
-		
 		
 		//5 dropDownboxes dataSeriesString, timeSeriesString, symbolString, timeIntervalString and outpusizeString
 		//initializes dataSeries list:
@@ -109,9 +103,11 @@ public class Window extends JFrame {
 		String[] temp = main.Main.inis.getKeyValue("SYMBOL");
 		String[] symlist = new String[temp.length+1];
 		symlist[0] = "";
+		
 		for (int i = 1; i < temp.length; i++) {
 			symlist[i] = main.Main.inis.getKeyValueInt(i, "SYMBOL");	
 		}
+		
 		symbol1 = new JComboBox<String>(symlist);
 		symbol2 = new JComboBox<String>(symlist);
 		
@@ -326,6 +322,8 @@ public class Window extends JFrame {
 		this.setVisible(true);
 	}
 	
+	
+	
 	//to get preferred size on content
 	public void packMe() {
 		this.repaint();
@@ -373,19 +371,11 @@ public class Window extends JFrame {
 		}
 	}
 	
+	
+	
 	//to check if dataSeries is empty
 	public boolean dataSeriesEmpty() {
 		return dataSeriesListString.isEmpty();
 	}
 
-	public void DEBUG_READ_DATA_SERIES() {
-
-
-		//System.out.println("-----");
-		//System.out.println("(In Window)" + dataSeriesListString.isEmpty());
-		for (int i = dataSeriesListString.size()-1; i >= 0; i--) {
-			System.out.println("In Window" + dataSeriesListString.get(i));
-		}
-		//System.out.println("-----");
-	}	
 }

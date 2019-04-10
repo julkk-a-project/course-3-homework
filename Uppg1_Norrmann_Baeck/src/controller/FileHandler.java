@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class FileHandler {
+	
+	//Reads file
 	public static void readFile(String path) {
+		
 		try {
 			FileReader reader = new FileReader(path);
 			BufferedReader buf = new BufferedReader(reader);
-			
 			String line;
+			
 			while ((line = buf.readLine()) != null) {
 				String[] temp = line.split("=");
 				String key = temp[0];
@@ -20,13 +23,14 @@ public class FileHandler {
 				for(int i = 0; i < value.length; i++) {
 					value[i] = value[i].trim();
 				}
+				
 				main.Main.inis.setKeyValue(key, value);
 			}
 			
 			buf.close();
 			
 		} catch (IOException ioe) {
-			
+			System.out.println("FileHandler IOException: " + ioe);
 		}
 	}
 

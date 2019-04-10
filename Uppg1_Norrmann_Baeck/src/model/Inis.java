@@ -6,10 +6,14 @@ import java.util.HashMap;
 public class Inis {
 	private Map<String, String[]> ini;
 
+	
+	
 	public Inis() {
 		ini = new HashMap<String, String[]>();
 	}
 
+	
+	
 	public String[] getKeyValue(String key) {
 		try {
 			return ini.get(key);
@@ -19,6 +23,9 @@ public class Inis {
 		}
 	}
 
+	
+	
+	//Gets Value of Key
 	public String getKeyValueInt(int i, String key) {
 		try {
 			String[] temp = ini.get(key);
@@ -26,9 +33,13 @@ public class Inis {
 		}catch (NullPointerException npe) {
 			return "Error, no data found. Check Ini-file.";
 		}
-		}	
+	}	
 	
+	
+	
+	//Sets Value to Key
 	public void setKeyValue(String key, String[] value) {
 		ini.put(key, value);
 	}
+	
 }

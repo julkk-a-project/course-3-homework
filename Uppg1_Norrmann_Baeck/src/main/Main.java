@@ -13,10 +13,10 @@ public class Main {
 	public static Inis inis;
 	public static FileHandler fileHandler;
 	
+	
 	public static void main(String[] args) {
 		inis = new Inis();
 		FileHandler.readFile("StockAnalyzer.ini");
-		
 		window = new Window();
 		dataStorer = new DataStorer();
 		actionListeners = new ActionListeners();

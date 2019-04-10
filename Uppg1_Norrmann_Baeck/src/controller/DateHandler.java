@@ -9,6 +9,9 @@ public class DateHandler {
 	static List<String> dateList1 = new ArrayList<String>();
 	static List<String> dateList2 = new ArrayList<String>();
 	
+	
+	
+	//checks if input date needs to be handled (if input illogical)
 	public static boolean needsHandling() {
 		
 		try {
@@ -77,6 +80,10 @@ public class DateHandler {
 		}	*/
 	}
 	
+	
+	
+	
+	//splits input dates and compares if input is logical
 	private static boolean isAfter(String before, String after) {
 		
 		//format: 2019-12-31
@@ -105,6 +112,8 @@ public class DateHandler {
 	}
 	
 	
+	
+	//checks that date is legit
 	private static boolean isLegit(String date) {
 		//format: 2019-12-31
 
@@ -133,26 +142,37 @@ public class DateHandler {
 	
 	
 	
+	//if dates in range
 	public static boolean inRange(String date) {
 		boolean after = isAfter(date, getStartDate());
 		boolean before = isAfter(getEndDate(), date);
 		return before && after;
 	}
-
+	
+	
+	
+	//to get end date from endDateTextArea
 	private static String getEndDate() {
 		return main.Main.window.endDateTextArea.getText();
 	}
 
+	
+
+	//to get end date from startDateTextArea
 	private static String getStartDate() {
 		return main.Main.window.startDateTextArea.getText();
 	}
 	
+	
+	
+	//sets dates
 	public static void setDateList(boolean isSymbol2, List list) {
 		if(isSymbol2) {
 			dateList2 = list;
+	
 		} else {
 			dateList1 = list;
 		}
 	}
-
+	
 }
